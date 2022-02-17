@@ -1,3 +1,15 @@
+<script setup lang="ts">
+//CompositionAPI
+import StartScreen from "./pages/StartScreen.vue";
+import Question from "./pages/Question.vue";
+import Result from "./pages/Result.vue";
+</script>
+
 <template>
-  <h1>Hellooooo Not World</h1>
+  <header>
+    <!-- <StartScreen /> -->
+    <Question />
+    <Result />
+  </header>
+  <router-view />
 </template>
