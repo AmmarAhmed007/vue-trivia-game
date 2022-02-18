@@ -1,48 +1,20 @@
 import { BASE_URL } from "./";
 
-export async function apiGetUser(username:any) {
-    try {
-        const config = {
-            method: "GET",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-            })
-        }
+export async function apiGetUser(username: any) {
+    fetch(`${BASE_URL}?username=${username}`)
+        .then(response => response.json())
+        .then(results => {
+            // results will be an array of users that match the username of mega-mind.
+            console.log(results);
 
-        const response = await fetch(`${BASE_URL}?username=${username}`, config)
+        })
+        .catch(error => {
+            console.log(error);
 
-        //return response;
-
-        const { data } = await response.json();
-
-        console.log(data);
-        
-
-        /*
-
-        const { success, data, error = "An error occured" } = await response.json()
-        if (!success) {
-            throw new Error(error)
-        }
-
-        return [null, data]
-
-        */
-
-        return data;
-
-        
-
-    } 
-    catch (error:any) {
-        console.log(error.message);
-        
-    }
+        })
 }
 
-export async function apiUsersRegister(username:any) {
+export async function apiUsersRegister(username: any) {
     try {
         const config = {
             method: "POST",
