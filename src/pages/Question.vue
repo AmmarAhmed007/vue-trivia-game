@@ -6,7 +6,7 @@ const amount = { five: "5", ten: "10", fifteen: "15"  }
 const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const type = { boolean: 'boolean', multiple: 'multiple'};
 
-const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.hard, type.multiple);
+const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.medium, type.multiple);
 console.log(questions);
 console.log(error);
 

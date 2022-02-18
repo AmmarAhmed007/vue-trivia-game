@@ -1,5 +1,4 @@
 import axios from "axios";
-import { QUIZ_URL } from "./";
 
 const TRIVIA_URL = "https://opentdb.com/api.php?category=15"
 const apiAmount = "&amount="
@@ -35,4 +34,3 @@ export async function fetchTriviaQuestions(amount: string, diff: string, type: s
         return [error.message, []];
     }
 }
-
