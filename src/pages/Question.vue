@@ -5,9 +5,9 @@ import { fetchAllQuestions } from "../api/questions"
 const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const type = { boolean: 'boolean', multiple: 'multiple'};
 
-const [_error, _questions] = await fetchAllQuestions(difficulty.hard, type.multiple);
-console.log(_questions);
-console.log(_error);
+const [error, questions] = await fetchAllQuestions(difficulty.easy, type.boolean);
+console.log(questions);
+console.log(error);
 
 </script>
 
