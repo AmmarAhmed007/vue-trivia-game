@@ -45,6 +45,36 @@ const onSubmit = async () => {
 </script>
 
 <template>
+  <div style="display:flexbox">
+    <div class="triviaAmount">
+      <h5>Select Trivia Amount</h5>
+      <div>
+        5
+        <input type="radio" value="5" name="amount" />
+        10
+        <input type="radio" value="10" name="amount" />
+        15
+        <input type="radio" value="15" name="amount" />
+      </div>
+    </div>
+
+    <div class="triviadiff">
+      <h5>Select difficulty</h5>
+      Easy
+      <input type="radio" name="diff"/>
+      Medium
+      <input type="radio" name="diff"/>
+      Hard
+      <input type="radio" name="diff"/>
+    </div>
+
+    <div class="triviaType">
+      <h5>Select question type</h5>
+      True/False<input type="radio" name="type" />
+      Multiple Choise<input type="radio" name="type" />
+    </div>
+  </div>
+
   <form @submit.prevent="onSubmit">
     <fieldset>
       <label for="username" aria-label="Username">Enter your username to start:</label>
@@ -62,3 +92,14 @@ const onSubmit = async () => {
     <p>{{ displayError }}</p>
   </div>
 </template>
+
+<style>
+.triviaAmount {
+  padding: 10px;
+  width: 20%;
+}
+
+.btn {
+  display: flow-root;
+}
+</style>
