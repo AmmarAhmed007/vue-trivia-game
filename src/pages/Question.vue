@@ -2,10 +2,11 @@
 import { reactive, ref } from "vue";
 import { fetchAllQuestions } from "../api/questions"
 
+const amount = { five: "5", ten: "10", fifteen: "15"  }
 const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const type = { boolean: 'boolean', multiple: 'multiple'};
 
-const [error, questions] = await fetchAllQuestions("10", difficulty.easy, type.multiple);
+const [error, questions] = await fetchAllQuestions(amount.ten, difficulty.hard, type.multiple);
 console.log(questions);
 console.log(error);
 
