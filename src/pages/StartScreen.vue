@@ -6,6 +6,7 @@ const username = ref("");
 const displayError = ref("");
 const onSubmit = async () => {
 
+
   const [error, user] = await apiGetUser(username.value)
   if (error !== null) {
     displayError.value = error;
