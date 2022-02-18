@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { apiUsersRegister } from "../api/users"
+import { apiGetUser, apiUsersRegister } from "../api/users"
 
 const username = ref("");
 const displayError = ref("");
 const onSubmit = async () => {
-  const [error, user] = await apiUsersRegister(username.value)
+
+  const [error, user] = await apiGetUser(username.value)
   if (error !== null) {
     displayError.value = error;
   } else {

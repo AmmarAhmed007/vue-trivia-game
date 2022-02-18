@@ -1,1 +1,1 @@
-export const BASE_URL = "https://github.com/dewald-els/noroff-assignment-api"
+export const BASE_URL = "https://aa-jc-vue-trivia-game.herokuapp.com/trivia"
