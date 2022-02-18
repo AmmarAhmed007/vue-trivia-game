@@ -6,10 +6,6 @@ const TRIVIA_URL = "https://opentdb.com/api.php?amount=10&category=15"
 const apiDiff = "&difficulty=";
 const apiType = "&type=";
 
-let difficulty = "";
-let type = "";
-
-
 export interface TriviaResponse {
     response_code: number,
     results: Trivia[]
@@ -24,27 +20,18 @@ export interface Trivia {
     incorrect_answers: string[]
 }
 
-
-export async function fetchAllQuestions(): Promise<[string | null, Trivia[]]> {
+export async function fetchAllQuestions(diff: string, type: string): Promise<[string | null, Trivia[]]> {
     try {
-        const { data } = await axios.get<TriviaResponse>(TRIVIA_URL);
-		return [null, data.results];
+        const _difficulty = apiDiff + diff;
+        const _type = apiType + type;
+
+        const URL = TRIVIA_URL + _difficulty + _type;
+        console.log(URL);
+
+        const { data } = await axios.get<TriviaResponse>(URL);
+        return [null, data.results];
     } catch (error: any) {
         return [error.message, []];
     }
-}
-
-
-
-
-
-export function selectDifficulty( d: string ) {
-    difficulty = apiDiff + d;
-    console.log("API DIFFICULTY: " + difficulty);
-}
-
-export function selectType( t: string ) {
-    type = apiType + t;
-    console.log("API Type: " + type);
 }
 
