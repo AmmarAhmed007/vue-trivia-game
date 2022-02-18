@@ -2,9 +2,9 @@
 // import { reactive, ref } from "vue";
 import { fetchTriviaQuestions } from "../api/questions"
 
-const amount = { five: "5", ten: "10", fifteen: "15"  }
+const amount = { five: "5", ten: "10", fifteen: "15" }
 const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
-const type = { boolean: 'boolean', multiple: 'multiple'};
+const type = { boolean: 'boolean', multiple: 'multiple' };
 
 const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.medium, type.multiple);
 console.log(questions);
@@ -22,5 +22,14 @@ for (const trivia of questions) {
 </script>
 
 <template>
-    <h1>Hello Question</h1>
+    <div class="grid-container" style="border:solid">
+        <div id="question-container" class="hide"></div>
+        <div class="questions"></div>
+        <div id="answers" class="btn-grid">
+            <button class="btn">Answer 1</button>
+            <button class="btn">Answer 2</button>
+            <button class="btn">Answer 3</button>
+            <button class="btn">Answer 4</button>
+        </div>
+    </div>
 </template>
