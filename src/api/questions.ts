@@ -20,7 +20,7 @@ export interface Trivia {
     incorrect_answers: string[]
 }
 
-export async function fetchAllQuestions(amount: string, diff: string, type: string): Promise<[string | null, Trivia[]]> {
+export async function fetchTriviaQuestions(amount: string, diff: string, type: string): Promise<[string | null, Trivia[]]> {
     try {
         const _amount = apiAmount + amount;
         const _difficulty = apiDiff + diff;
