@@ -1,17 +1,28 @@
+import axios, { AxiosResponse } from "axios";
 import { BASE_URL } from "./";
 
-export async function apiGetUser(username: any) {
-    fetch(`${BASE_URL}?username=${username}`)
-        .then(response => response.json())
-        .then(results => {
-            // results will be an array of users that match the username of mega-mind.
-            console.log(results);
+export interface UserResponse {
+    username: string;
+    score: number;
+    id: number;
+}
 
-        })
-        .catch(error => {
-            console.log(error);
+export async function apiFindAll(): Promise<UserResponse[]> {
+    const { data } = await axios.get<UserResponse>(BASE_URL);
 
-        })
+    const users = [];
+    users.push(data);
+
+    return users;
+}
+
+export async function apiGetUser(user: any): Promise<any> {
+    try {
+        const { data } = await axios.get<UserResponse>(`${BASE_URL}?username=${user}`)
+        return data;
+    } catch (error: any) {
+        console.log(error);
+    }
 }
 
 export async function apiUsersRegister(username: any) {
