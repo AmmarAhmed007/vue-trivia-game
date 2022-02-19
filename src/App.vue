@@ -7,9 +7,10 @@ import Result from "./pages/Result.vue";
 
 <template>
   <header>
-    <!-- <StartScreen /> -->
-    <Question />
+    <!-- <StartScreen />  -->
     <Result />
+    
   </header>
   <router-view />
+  <Question />
 </template>
