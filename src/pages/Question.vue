@@ -2,24 +2,31 @@
 import { reactive, ref } from "vue";
 import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
-const amount = { five: "5", ten: "10", fifteen: "15" }
-const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
+const _amount = { five: "5", ten: "10", fifteen: "15" }
+const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
+const _type = { boolean: 'boolean', multiple: 'multiple'};
 
-// const userName = ref<string>("gingerbread")
+const userName = ref<string>("gingerbread")
 const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
+let triviaScore = ref<number>(0);
 let triviaCount = ref<number>(0);
 
 (async function () {
 
-    const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.medium);
+    const [error, questions] = await fetchTriviaQuestions(_amount.ten, _difficulty.medium);
     console.log(questions);
     console.log(error);
 
     triviaQuestions.push(...questions);
 
-    const { question, correct_answer, incorrect_answers } = triviaQuestions[0];
+    getTrivia();
+
+})();
+
+function getTrivia() {
+    const { question, correct_answer, incorrect_answers, type } = triviaQuestions[triviaCount.value];
 
     triviaQuestion.value = question;
 
@@ -28,7 +35,10 @@ let triviaCount = ref<number>(0);
 
     triviaAnswers.value.sort();
 
-})();
+    if (type === _type.boolean) {
+        alert(_type.boolean + " type!");
+    }
+}
 
 function getTriviaQuestions() {
     for (const trivia of triviaQuestions) {
@@ -46,13 +56,18 @@ function getTriviaQuestions() {
 <template>
     <div class="container" style="border:solid">
         <div id="question-container" class="hide"></div>
-        <div class="questions-counter">Question {{triviaCount}} / {{triviaQuestions.length}} </div>
+        <div class="questions-counter">
+            Question: {{triviaCount}} / {{triviaQuestions.length}} &emsp; &emsp; &emsp;
+            Username: {{userName}} &emsp; &emsp; &emsp; 
+            Score: {{triviaScore}} / {{triviaQuestions.length}} 
+    
+        </div>
         <div class="questions">{{triviaQuestion}}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn">Answer 1: {{triviaAnswers[0]}}</button>
-            <button class="btn">Answer 2: {{triviaAnswers[1]}}</button>
-            <button class="btn">Answer 3: {{triviaAnswers[2]}}</button>
-            <button class="btn">Answer 4: {{triviaAnswers[3]}}</button>
+            <button class="btn">{{triviaAnswers[0]}}</button>
+            <button class="btn">{{triviaAnswers[1]}}</button>
+            <button class="btn">{{triviaAnswers[2]}}</button>
+            <button class="btn">{{triviaAnswers[3]}}</button>
         </div>
         <button type="submit" class="nextButton btn">Next Question</button>
     </div>
