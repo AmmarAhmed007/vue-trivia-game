@@ -1,39 +1,58 @@
-<script setup lang="ts" defer>
+<script setup lang="ts">
 import { reactive, ref } from "vue";
-import { fetchTriviaQuestions } from "../api/questions"
+import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
-const amount = { five: "5", ten: "10", fifteen: "15"  }
+const amount = { five: "5", ten: "10", fifteen: "15" }
 const difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
-const type = { boolean: 'boolean', multiple: 'multiple'};
 
-(async function() {
-    
-    const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.medium, type.multiple);
+// const userName = ref<string>("gingerbread")
+const triviaQuestions = reactive<Trivia[]>([]);
+let triviaQuestion = ref<string>("");
+let triviaAnswers = ref<string[]>([]);
+let triviaCount = ref<number>(0);
+
+(async function () {
+
+    const [error, questions] = await fetchTriviaQuestions(amount.ten, difficulty.medium);
     console.log(questions);
     console.log(error);
 
-for (const trivia of questions) {
-    const { question, correct_answer, incorrect_answers } = trivia;
+    triviaQuestions.push(...questions);
 
-    console.log("-----------------------------------------------");
-    console.log("QUESTION: " + question);
-    console.log("ANSWER: " + correct_answer);
-    console.log("WRONGS: " + incorrect_answers);
+    const { question, correct_answer, incorrect_answers } = triviaQuestions[0];
+
+    triviaQuestion.value = question;
+
+    triviaAnswers.value.push(correct_answer);
+    triviaAnswers.value.push(...incorrect_answers);
+
+    triviaAnswers.value.sort();
+
+})();
+
+function getTriviaQuestions() {
+    for (const trivia of triviaQuestions) {
+        const { question, correct_answer, incorrect_answers } = trivia;
+
+        console.log("-----------------------------------------------");
+        console.log("QUESTION: " + question);
+        console.log("ANSWER: " + correct_answer);
+        console.log("WRONGS: " + incorrect_answers);
+    }
 }
-
-})(); 
 
 </script>
 
 <template>
     <div class="container" style="border:solid">
         <div id="question-container" class="hide"></div>
-        <div class="questions">Question</div>
+        <div class="questions-counter">Question {{triviaCount}} / {{triviaQuestions.length}} </div>
+        <div class="questions">{{triviaQuestion}}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn">Answer 1</button>
-            <button class="btn">Answer 2</button>
-            <button class="btn">Answer 3</button>
-            <button class="btn">Answer 4</button>
+            <button class="btn">Answer 1: {{triviaAnswers[0]}}</button>
+            <button class="btn">Answer 2: {{triviaAnswers[1]}}</button>
+            <button class="btn">Answer 3: {{triviaAnswers[2]}}</button>
+            <button class="btn">Answer 4: {{triviaAnswers[3]}}</button>
         </div>
         <button type="submit" class="nextButton btn">Next Question</button>
     </div>
@@ -116,7 +135,7 @@ body.correct {
 }
 
 .nextButton {
-    float:right;
+    float: right;
     padding-top: 10px;
     width: 100%;
     background-color: darksalmon;

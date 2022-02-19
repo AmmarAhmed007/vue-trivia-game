@@ -19,13 +19,12 @@ export interface Trivia {
     incorrect_answers: string[]
 }
 
-export async function fetchTriviaQuestions(amount: string, diff: string, type: string): Promise<[string | null, Trivia[]]> {
+export async function fetchTriviaQuestions(amount: string, diff: string): Promise<[string | null, Trivia[]]> {
     try {
         const _amount = apiAmount + amount;
         const _difficulty = apiDiff + diff;
-        const _type = apiType + type;
 
-        const URL = TRIVIA_URL + _amount + _difficulty + _type;
+        const URL = TRIVIA_URL + _amount + _difficulty;
         console.log(URL);
 
         const { data } = await axios.get<TriviaResponse>(URL);
