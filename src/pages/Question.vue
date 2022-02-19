@@ -25,10 +25,19 @@ let triviaCount = ref<number>(0);
 
 })();
 
+const nextQuestion = () => {
+    const count = triviaCount.value + 1;
+    triviaCount.value = count;
+
+    getTrivia();
+}
+
 function getTrivia() {
     const { question, correct_answer, incorrect_answers, type } = triviaQuestions[triviaCount.value];
 
     triviaQuestion.value = question;
+
+    triviaAnswers.value = [];
 
     triviaAnswers.value.push(correct_answer);
     triviaAnswers.value.push(...incorrect_answers);
@@ -36,20 +45,23 @@ function getTrivia() {
     triviaAnswers.value.sort();
 
     if (type === _type.boolean) {
+        // todo: hide answers (buttons) 3 & 4 from html
         alert(_type.boolean + " type!");
     }
 }
 
-function getTriviaQuestions() {
-    for (const trivia of triviaQuestions) {
-        const { question, correct_answer, incorrect_answers } = trivia;
+// function getTriviaQuestions() {
 
-        console.log("-----------------------------------------------");
-        console.log("QUESTION: " + question);
-        console.log("ANSWER: " + correct_answer);
-        console.log("WRONGS: " + incorrect_answers);
-    }
-}
+    
+//     for (const trivia of triviaQuestions) {
+//         const { question, correct_answer, incorrect_answers } = trivia;
+
+//         console.log("-----------------------------------------------");
+//         console.log("QUESTION: " + question);
+//         console.log("ANSWER: " + correct_answer);
+//         console.log("WRONGS: " + incorrect_answers);
+//     }
+// }
 
 </script>
 
@@ -66,10 +78,10 @@ function getTriviaQuestions() {
         <div id="answers" class="btn-grid">
             <button class="btn">{{triviaAnswers[0]}}</button>
             <button class="btn">{{triviaAnswers[1]}}</button>
-            <button class="btn">{{triviaAnswers[2]}}</button>
-            <button class="btn">{{triviaAnswers[3]}}</button>
+            <button class="btn" id="ans3">{{triviaAnswers[2]}}</button>
+            <button class="btn" id="ans4">{{triviaAnswers[3]}}</button>
         </div>
-        <button type="submit" class="nextButton btn">Next Question</button>
+        <button @click.prevent="nextQuestion" class="nextButton btn">Next Question</button>
     </div>
 </template>
 
