@@ -17,7 +17,7 @@ let userAnswers: string[] = [];
 
 (async function () {
 
-    const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.medium);
+    const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.easy);
     console.log(questions);
     console.log(error);
 
@@ -25,9 +25,6 @@ let userAnswers: string[] = [];
 
     getTrivia();
     triviaCount.value += 1;
-
-    //nextQuestion;
-
 })();
 
 const nextQuestion = () => {
