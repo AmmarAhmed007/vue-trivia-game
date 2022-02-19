@@ -7,7 +7,7 @@ import Question from "./pages/Question.vue"
 const routes: RouteRecordRaw[] = [
     {
         path: "/",
-        component: StartScreen
+        component: Question
     }
 ]
 
