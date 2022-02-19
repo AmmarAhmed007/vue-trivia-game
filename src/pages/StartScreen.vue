@@ -59,19 +59,19 @@ const onSubmit = async () => {
     </div>
 
     <div class="triviadiff">
-      <h5>Select difficulty</h5>
-      Easy
-      <input type="radio" name="diff"/>
+      <h5>Select difficulty</h5>Easy
+      <input type="radio" name="diff" />
       Medium
-      <input type="radio" name="diff"/>
+      <input type="radio" name="diff" />
       Hard
-      <input type="radio" name="diff"/>
+      <input type="radio" name="diff" />
     </div>
 
     <div class="triviaType">
-      <h5>Select question type</h5>
-      True/False<input type="radio" name="type" />
-      Multiple Choise<input type="radio" name="type" />
+      <h5>Select question type</h5>True/False
+      <input type="radio" name="type" />
+      Multiple Choise
+      <input type="radio" name="type" />
     </div>
   </div>
 
@@ -81,8 +81,9 @@ const onSubmit = async () => {
       <br />
       <br />
       <input type="text" id="username" placeholder="GamerNerd123" v-model="user" />
-
-      <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
+      <router-link to="/question">
+        <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
+      </router-link>
     </fieldset>
   </form>
   <p>Your entered name is: {{ user }}</p>
