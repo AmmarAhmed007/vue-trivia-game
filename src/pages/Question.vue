@@ -4,7 +4,7 @@ import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
 const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
-const _type = { boolean: 'boolean', multiple: 'multiple'};
+const _type = { boolean: 'boolean', multiple: 'multiple' };
 
 const userName = ref<string>("gingerbread")
 const triviaQuestions = reactive<Trivia[]>([]);
@@ -13,23 +13,31 @@ let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
 let triviaCount = ref<number>(0);
 
+let userAnswers: string[] = [];
+
 (async function () {
 
-    const [error, questions] = await fetchTriviaQuestions(_amount.ten, _difficulty.medium);
+    const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.medium);
     console.log(questions);
     console.log(error);
 
     triviaQuestions.push(...questions);
 
     getTrivia();
+    triviaCount.value += 1;
+
+    //nextQuestion;
 
 })();
 
 const nextQuestion = () => {
-    const count = triviaCount.value + 1;
-    triviaCount.value = count;
-
-    getTrivia();
+    
+    if (triviaCount.value < triviaQuestions.length) {
+        triviaCount.value += 1;
+        getTrivia();
+    } else {
+        alert("You made it!");
+    }
 }
 
 function getTrivia() {
@@ -50,36 +58,22 @@ function getTrivia() {
     }
 }
 
-// function getTriviaQuestions() {
-
-    
-//     for (const trivia of triviaQuestions) {
-//         const { question, correct_answer, incorrect_answers } = trivia;
-
-//         console.log("-----------------------------------------------");
-//         console.log("QUESTION: " + question);
-//         console.log("ANSWER: " + correct_answer);
-//         console.log("WRONGS: " + incorrect_answers);
-//     }
-// }
-
 </script>
 
 <template>
     <div class="container" style="border:solid">
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
-            Question: {{triviaCount}} / {{triviaQuestions.length}} &emsp; &emsp; &emsp;
-            Username: {{userName}} &emsp; &emsp; &emsp; 
-            Score: {{triviaScore}} / {{triviaQuestions.length}} 
-    
+            Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
+            Username: {{ userName }} &emsp; &emsp; &emsp;
+            Score: {{ triviaScore }} / {{ triviaQuestions.length }}
         </div>
-        <div class="questions">{{triviaQuestion}}</div>
+        <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn">{{triviaAnswers[0]}}</button>
-            <button class="btn">{{triviaAnswers[1]}}</button>
-            <button class="btn" id="ans3">{{triviaAnswers[2]}}</button>
-            <button class="btn" id="ans4">{{triviaAnswers[3]}}</button>
+            <button class="btn">{{ triviaAnswers[0] }}</button>
+            <button class="btn">{{ triviaAnswers[1] }}</button>
+            <button class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
+            <button class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
         </div>
         <button @click.prevent="nextQuestion" class="nextButton btn">Next Question</button>
     </div>
