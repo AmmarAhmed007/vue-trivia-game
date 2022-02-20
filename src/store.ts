@@ -3,14 +3,28 @@ import { apiGetUser } from "./api/users";
 
 export default createStore({
     state: {
-        user: null
+        // variables and collections
+        userName: "Gamer",
+        user: {
+            name: "",
+            score: ""
+        },
+        questions: [],
+        answers: [],
+        results: [],
     },
     mutations: {
-        setUser: (state, user) => {
-            state.user = user;
-        }
+        // synchronous function for changing state 
+        setUserName: (state, name) => {
+            state.userName = name;
+        },
+        setScore: (state, score) => {
+            state.user.score = score;
+        },
     },
     actions: {
+        // asynchronous functions that can call one or more mutation functions
+
         // async registerTriviaUser({ commit, state }, action) {
         //     try {
         //         if (action !== "login" && action !== "register") {
@@ -26,5 +40,10 @@ export default createStore({
 
         //     }
         // }
+    },
+    getters: {
+        userName: state => {
+            return state.userName;
+        }
     }
 })
