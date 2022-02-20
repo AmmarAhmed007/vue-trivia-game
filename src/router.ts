@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
     }
 ]
 
-export default createRouter({
+export default createRouter({  
     history: createWebHistory(),
     routes
 });

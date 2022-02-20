@@ -1,3 +1,63 @@
 <template>
-    <h2>Result</h2>
+    <div class="result shadow-lg shadow-black">
+        <div class="header">
+            <h2>High Score</h2>
+        </div>
+        <div class="grid-container">
+            <div class="username">Username:</div>
+            <div class="score">Score:</div>
+            <h2 class="text-pink-500">Hello</h2>
+        </div>
+    </div>
+            <div>
+                <router-link to="/">
+                    <button class="btn1 btn" type="submit">Back to start</button>
+                </router-link>
+                <router-link to="/question">
+                    <button class="btn2 btn" type="submit">Replay</button>
+                </router-link>
+            </div>
 </template>
+
+<style>
+.grid-container {
+    display: grid;
+    text-align: center;
+}
+
+.username {
+    grid-column: 1;
+    font-weight: bold;
+}
+
+.score {
+    grid-column: 2;
+    font-weight: bold;
+}
+
+.result {
+    width: 60vh;
+    height: 60vh;
+    padding: 10px;
+}
+
+.header {
+    text-align: center;
+}
+
+table {
+    padding: 15px;
+    border: 1px solid;
+    text-align: center;
+    align-content: center;
+}
+
+.btn1 {
+    grid-column: 1;
+}
+
+.btn2 {
+    grid-column: 2;
+    float: left;
+}
+</style>

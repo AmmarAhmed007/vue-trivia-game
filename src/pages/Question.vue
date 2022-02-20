@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
+import { routerKey } from "vue-router";
 import { fetchTriviaQuestions, Trivia } from "../api/questions"
+import VueRouter from 'vue-router'
 
 const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
@@ -28,7 +30,7 @@ let userAnswers: string[] = [];
 })();
 
 const nextQuestion = () => {
-    
+
     if (triviaCount.value < triviaQuestions.length) {
         triviaCount.value += 1;
         getTrivia();
@@ -54,6 +56,7 @@ function getTrivia() {
         alert(_type.boolean + " type!");
     }
 }
+
 
 </script>
 
@@ -135,7 +138,7 @@ body.correct {
 .questions {
     text-align: center;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-size: 40px;
+    font-size: 20px;
     border: 1px solid;
     border-radius: 5px;
 }
@@ -157,5 +160,9 @@ body.correct {
     padding-top: 10px;
     width: 100%;
     background-color: darksalmon;
+}
+
+.questions-counter {
+    text-align: center;
 }
 </style>
