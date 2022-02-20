@@ -2,7 +2,6 @@
 //CompositionAPI
 import StartScreen from "./pages/StartScreen.vue";
 import Question from "./pages/Question.vue";
-import Result from "./pages/Result.vue";
 </script>
 
 <template>
