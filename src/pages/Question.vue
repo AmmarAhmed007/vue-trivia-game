@@ -4,6 +4,7 @@ import { routerKey } from "vue-router";
 import VueRouter from 'vue-router'
 import { useStore } from "vuex";
 import { fetchTriviaQuestions, Trivia } from "../api/questions"
+import router from "../router";
 
 const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
@@ -52,7 +53,7 @@ const nextQuestion = () => {
         triviaCount.value += 1;
         getTrivia();
     } else {
-        alert("You made it!");
+        router.push("/result");
     }
 }
 
