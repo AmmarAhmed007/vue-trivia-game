@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, VueElement } from "vue";
+import { useStore } from "vuex";
 import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
 
 const user = ref("");
@@ -8,21 +9,34 @@ const displayError = ref("");
 const users = reactive<UserResponse[]>([]);
 
 
+const store = useStore();
+
+
+
+
 const onSubmit = async () => {
+
+  store.dispatch('setUserName', "JC")
+
+  //store.commit('setUserName', "user.value");
+  // store.commit("setUserName", user.value);
+
+  //console.log(store.getters.userName);
+  
 
   // const user = await apiFindAll();
 
-  const _user = await apiGetUser(user.value);
+  // const _user = await apiGetUser(user.value);
 
-  console.log(user);
+  // console.log(user);
 
-  const { username, score, id } = _user[0];
+  // const { username, score, id } = _user[0];
 
-  console.log(_user[0]);
+  // console.log(_user[0]);
 
-  console.log(username);
-  console.log(score);
-  console.log(id);
+  // console.log(username);
+  // console.log(score);
+  // console.log(id);
 
 
   // const name =  apiGetUser(username.value);

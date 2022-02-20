@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { routerKey } from "vue-router";
-import { fetchTriviaQuestions, Trivia } from "../api/questions"
 import VueRouter from 'vue-router'
+import { useStore } from "vuex";
+import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
 const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
@@ -17,7 +18,23 @@ let triviaCount = ref<number>(0);
 
 let userAnswers: string[] = [];
 
+const store = useStore();
+//store.commit("setUserName", {user:user.value}) 
+
+// const user = computed(() => store.state.user.userName);
+
+const _userName = store.getters.userName;
+
+
+console.log(_userName);
+
+
+
 (async function () {
+
+    
+   // console.log(store.getters.userName);
+    
 
     const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.easy);
     console.log(questions);
@@ -65,7 +82,7 @@ function getTrivia() {
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
-            Username: {{ userName }} &emsp; &emsp; &emsp;
+            Username: {{ store.getters.userName }} &emsp; &emsp; &emsp;
             Score: {{ triviaScore }} / {{ triviaQuestions.length }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
