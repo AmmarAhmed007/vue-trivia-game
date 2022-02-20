@@ -94,7 +94,7 @@ const onSubmit = async () => {
       <label for="username" aria-label="Username">Enter your username to start:</label>
       <br />
       <br />
-      <input type="text" id="username" placeholder="GamerNerd123" v-model="user" />
+      <input type="text" id="username" placeholder="GamerNerd123" v-model="user"/>
       <router-link to="/question">
         <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
       </router-link>

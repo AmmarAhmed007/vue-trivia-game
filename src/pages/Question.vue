@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import { useStore } from "vuex";
 import { fetchTriviaQuestions, Trivia } from "../api/questions"
 import router from "../router";
+import 'animate.css'
 
 const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
@@ -78,8 +79,9 @@ function getTrivia() {
 
 </script>
 
+
 <template>
-    <div class="container" style="border:solid">
+    <div class="container animate__animated animate__zoomInUp" style="border:solid">
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
@@ -156,7 +158,7 @@ body.correct {
 .questions {
     text-align: center;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-size: 20px;
+    font-size: 25px;
     border: 1px solid;
     border-radius: 5px;
 }

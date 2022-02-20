@@ -1,12 +1,15 @@
+<script setup lang="ts">
+    import 'animate.css'
+</script>
+
 <template>
     <div class="result shadow-lg shadow-black">
-        <div class="header">
+        <div class="header animate__animated animate__tada">
             <h2>High Score</h2>
         </div>
         <div class="grid-container">
-            <div class="username">Username:</div>
-            <div class="score">Score:</div>
-            <h2 class="text-pink-500">Hello</h2>
+            <div class="username animate__animated animate__bounceInLeft">Username</div>
+            <div class="score animate__animated animate__bounceInLeft">Score</div>
         </div>
     </div>
             <div>
@@ -58,6 +61,5 @@ table {
 
 .btn2 {
     grid-column: 2;
-    float: left;
 }
 </style>
