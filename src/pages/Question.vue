@@ -25,11 +25,12 @@ let triviaCount = ref<number>(0);
 const store = useStore();
 const userName = computed(() => store.state.userName);
 const amount = computed(() => store.state.triviaParams.amount);
+const category = computed(() => store.state.triviaParams.category);
 const difficulty = computed(() => store.state.triviaParams.difficulty);
 
 (async function () {
     // fetch trivia questions from API using amount and difficulty params as parameters
-    const [error, questions] = await fetchTriviaQuestions(amount.value, difficulty.value);
+    const [error, questions] = await fetchTriviaQuestions(amount.value, category.value, difficulty.value);
     console.log(questions);
     console.log(error);
 

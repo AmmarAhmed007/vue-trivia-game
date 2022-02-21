@@ -11,6 +11,7 @@ export default createStore({
         },
         triviaParams: {
             amount: "10",
+            category: "15",
             difficulty: "medium",
         },
         questions: [],
@@ -27,6 +28,9 @@ export default createStore({
         },
         setTriviaAmount: (state, amount) => {
             state.triviaParams.amount = amount;
+        },
+        setTriviaCategory: (state, category) => {
+            state.triviaParams.category = category;
         },
         setTriviaDifficulty: (state, difficulty) => {
             state.triviaParams.difficulty = difficulty;
