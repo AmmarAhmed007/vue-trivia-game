@@ -1,60 +1,49 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
-import { routerKey } from "vue-router";
-import VueRouter from 'vue-router'
-import { useStore } from "vuex";
-import { fetchTriviaQuestions, Trivia } from "../api/questions"
-import router from "../router";
 import 'animate.css'
+import { computed, reactive, ref } from "vue";
+import { useStore } from "vuex";
+import router from "../router";
+import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
-// const _amount = { five: "5", ten: "10", fifteen: "15" }
-// const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
-const _type = { boolean: 'boolean', multiple: 'multiple' };
+// global variables
+const triviaType = { boolean: 'boolean', multiple: 'multiple' };
+let correct_trivia_answer = "";
+let answeredTrivia = false;
+let booleanTrivia = false;
+let questions: string[] = [];
+let userAnswers: string[] = [];
+let correctAnswers: string[] = [];
 
-//const userName = ref<string>("gingerbread")
+// set reactive and ref variables from vue
 const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
-let triviaCount = ref<number>(0);   
+let triviaCount = ref<number>(0);
 
-let questions: string[] = []; 
-let userAnswers: string[] = [];
-let correctAnswers: string[] = []; 
-
+// get state variables from vuex store
 const store = useStore();
-
 const userName = computed(() => store.state.userName);
-
 const amount = computed(() => store.state.triviaParams.amount);
 const difficulty = computed(() => store.state.triviaParams.difficulty);
 
-
-
-let answeredTrivia = false;
-
-let correct_trivia_answer = "";
-
 (async function () {
-
-
-    // console.log(store.getters.userName);
-
-
+    // fetch trivia questions from API using amount and difficulty params as parameters
     const [error, questions] = await fetchTriviaQuestions(amount.value, difficulty.value);
     console.log(questions);
     console.log(error);
 
+    // add a copy of trivia questions to global variable
     triviaQuestions.push(...questions);
 
+    // get and display first trivia question with answers
     getTrivia();
-    triviaCount.value += 1;
 })();
 
 const nextQuestion = () => {
-
     if (triviaCount.value < amount.value) {
-        triviaCount.value += 1;
+        answeredTrivia = false;
+        booleanTrivia = false;
         getTrivia();
     } else {
         store.commit("setTriviaQuestions", questions);
@@ -67,32 +56,26 @@ const nextQuestion = () => {
 function getTrivia() {
     const { question, correct_answer, incorrect_answers, type } = triviaQuestions[triviaCount.value];
 
+    // assign current trivia question and correct answer to global variables
     triviaQuestion.value = question;
+    correct_trivia_answer = correct_answer;
 
-    triviaAnswers.value = [];
-
-    triviaAnswers.value.push(correct_answer);
-    triviaAnswers.value.push(...incorrect_answers);
-
-    triviaAnswers.value.sort();
-
-    if (type === _type.boolean) {
-        // hide answers (buttons) 3 & 4 from html
-        hideAnswerButtons();
-    }
-
-    const { next } = getButtonElements();
-    next.style.backgroundColor = "orange";
-
+    // add current trivia question and correct answer to global arrays
     questions.push(question);
     correctAnswers.push(correct_answer);
 
-    correct_trivia_answer = correct_answer;
+    // reset, push and sort all current trivia answers
+    triviaAnswers.value = [];
+    triviaAnswers.value.push(...incorrect_answers, correct_answer);
+    triviaAnswers.value.sort();
 
-    answeredTrivia = false;
+    // set booleanTrivia as true if boolean trivia type
+    if (type === triviaType.boolean) booleanTrivia = true;
 
     enableAnswerButtons();
     resetAnswerBtnColors();
+
+    triviaCount.value += 1;
 }
 
 function getAnswerBtnValue(e) {
@@ -101,10 +84,9 @@ function getAnswerBtnValue(e) {
 
     userAnswers.push(userAnswer);
 
-    console.log("Button value " + userAnswer)
-    // disableAnswerButtons();
+    console.log("Button value " + userAnswer);
 
-    const answer = <HTMLInputElement>document.getElementById(e.target.id)
+    const answer = <HTMLInputElement>document.getElementById(e.target.id);
 
     if (userAnswer === correct_trivia_answer) {
         answer.style.backgroundColor = "green";
@@ -117,27 +99,26 @@ function getAnswerBtnValue(e) {
         answer.style.backgroundColor = "red";
     }
 
-    //checkTriviaAnswer()
-
     answeredTrivia = true;
     enableAnswerButtons();
 }
 
 function enableAnswerButtons() {
-    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    const { answer1, answer2, answer3, answer4, next } = getButtonElements();
     // disable answer button if answered trivia, or else enable button for answering
     answeredTrivia ? answer1.disabled = true : answer1.disabled = false;
     answeredTrivia ? answer2.disabled = true : answer2.disabled = false;
     answeredTrivia ? answer3.disabled = true : answer3.disabled = false;
     answeredTrivia ? answer4.disabled = true : answer4.disabled = false;
+
+    // enable next button if trivia answered, or else disable button
+    answeredTrivia ? next.disabled = false : next.disabled = true;
+
+    // hide two answer buttons if boolean trivia question, or else unhide
+    booleanTrivia ? answer3.hidden = true : answer3.hidden = false;
+    booleanTrivia ? answer4.hidden = true : answer4.hidden = false;
 }
 
-function hideAnswerButtons() {
-    const { answer3, answer4 } = getButtonElements();
-
-    answer3.hidden = true;
-    answer4.hidden = true;
-}
 
 function getButtonElements() {
     return {
@@ -158,13 +139,6 @@ function resetAnswerBtnColors() {
     answer4.style.backgroundColor = "blue";
 }
 
-function checkTriviaAnswer() {
-    const { next } = getButtonElements();
-
-    next.disabled = false;
-}
-
-
 </script>
 
 
@@ -175,7 +149,7 @@ function checkTriviaAnswer() {
             Question: {{ triviaCount }} / {{ amount }} &emsp; &emsp; &emsp;
             Username: {{ userName }} &emsp; &emsp; &emsp;
             Score: {{ triviaScore }} / {{ amount }} &emsp; &emsp; &emsp;
-            Difficulty: {{difficulty}}
+            Difficulty: {{ difficulty }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
