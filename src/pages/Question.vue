@@ -63,14 +63,13 @@ function getTrivia() {
     triviaAnswers.value.sort();
 
     if (type === _type.boolean) {
-        // todo: hide answers (buttons) 3 & 4 from html
-        // alert(_type.boolean + " type!");
+        // hide answers (buttons) 3 & 4 from html
         hideAnswerButtons();
     }
 
     // userAnswers.push();
 
-    disableAnswerButtons();
+    // disableAnswerButtons();
 }
 
 function disableAnswerButtons() {
@@ -103,7 +102,9 @@ function getAnswerButtonElements() {
         answer4: <HTMLInputElement>document.getElementById('ans4'),
     }
 }
-
+function getAnswerBtnValue(e){
+    console.log("Button value " + e.target.innerHTML)
+}
 
 </script>
 
@@ -118,10 +119,10 @@ function getAnswerButtonElements() {
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn" id="ans1">{{ triviaAnswers[0] }}</button>
-            <button class="btn" id="ans2">{{ triviaAnswers[1] }}</button>
-            <button class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
-            <button class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans1">{{ triviaAnswers[0] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans2">{{ triviaAnswers[1] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
         </div>
         <button @click.prevent="nextQuestion" class="nextButton btn">Next Question</button>
     </div>
