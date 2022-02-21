@@ -116,12 +116,15 @@ function getAnswerBtnValue(e) {
 }
 
 function enableAnswerButtons() {
-    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    const { answer1, answer2, answer3, answer4, next } = getButtonElements();
     // disable answer button if answered trivia, or else enable button for answering
     answeredTrivia ? answer1.disabled = true : answer1.disabled = false;
     answeredTrivia ? answer2.disabled = true : answer2.disabled = false;
     answeredTrivia ? answer3.disabled = true : answer3.disabled = false;
     answeredTrivia ? answer4.disabled = true : answer4.disabled = false;
+
+    // enable next button if trivia answered, or else disable button
+    answeredTrivia ? next.disabled = false : next.disabled = true;
 
     // hide two answer buttons if boolean trivia question, or else unhide
     booleanTrivia ? answer3.hidden = true : answer3.hidden = false;
