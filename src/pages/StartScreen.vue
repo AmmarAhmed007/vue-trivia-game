@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, VueElement } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
 
@@ -10,19 +11,20 @@ const users = reactive<UserResponse[]>([]);
 
 
 const store = useStore();
-
+const router = useRouter();
 
 
 
 const onSubmit = async () => {
 
-  store.dispatch('setUserName', "JC")
+  store.commit("setName", user.value);
 
-  //store.commit('setUserName', "user.value");
-  // store.commit("setUserName", user.value);
+  router.push("/question");
 
-  //console.log(store.getters.userName);
-  
+  // const user = computed(() => store.state.user.userName);
+
+  // store.dispatch('setUserName', "JC")
+
 
   // const user = await apiFindAll();
 
@@ -94,10 +96,8 @@ const onSubmit = async () => {
       <label for="username" aria-label="Username">Enter your username to start:</label>
       <br />
       <br />
-      <input type="text" id="username" placeholder="GamerNerd123" v-model="user"/>
-      <router-link to="/question">
-        <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
-      </router-link>
+      <input type="text" id="username" placeholder="GamerNerd123" v-model="user" />
+      <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
     </fieldset>
   </form>
   <p>Your entered name is: {{ user }}</p>

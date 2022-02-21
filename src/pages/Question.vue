@@ -11,7 +11,7 @@ const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const _type = { boolean: 'boolean', multiple: 'multiple' };
 
-const userName = ref<string>("gingerbread")
+//const userName = ref<string>("gingerbread")
 const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
@@ -21,22 +21,18 @@ let triviaCount = ref<number>(0);
 let userAnswers: string[] = [];
 
 const store = useStore();
-//store.commit("setUserName", {user:user.value}) 
 
-// const user = computed(() => store.state.user.userName);
+const userName = computed(() => store.state.userName);
 
-const _userName = store.getters.userName;
+let answeredTrivia = false;
 
-
-console.log(_userName);
-
-
+let correct_trivia_answer = "";
 
 (async function () {
 
-    
-   // console.log(store.getters.userName);
-    
+
+    // console.log(store.getters.userName);
+
 
     const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.easy);
     console.log(questions);
@@ -71,9 +67,90 @@ function getTrivia() {
     triviaAnswers.value.sort();
 
     if (type === _type.boolean) {
-        // todo: hide answers (buttons) 3 & 4 from html
-        alert(_type.boolean + " type!");
+        // hide answers (buttons) 3 & 4 from html
+        hideAnswerButtons();
     }
+
+    const { next } = getButtonElements();
+    next.style.backgroundColor = "orange";
+
+
+
+    correct_trivia_answer = correct_answer;
+
+    answeredTrivia = false;
+
+    enableAnswerButtons();
+    resetAnswerBtnColors();
+}
+
+function getAnswerBtnValue(e) {
+
+    const userAnswer: string = e.target.innerHTML;
+
+    userAnswers.push(userAnswer);
+
+    console.log("Button value " + userAnswer)
+    // disableAnswerButtons();
+
+    const answer = <HTMLInputElement>document.getElementById(e.target.id)
+
+    if (userAnswer === correct_trivia_answer) {
+        answer.style.backgroundColor = "green";
+    } else {
+        const { answer1, answer2, answer3, answer4 } = getButtonElements();
+        const answers = [answer1, answer2, answer3, answer4];
+        answers.forEach(element => {
+            if (element.innerHTML === correct_trivia_answer) element.style.backgroundColor = "green"
+        });
+        answer.style.backgroundColor = "red";
+    }
+
+    //checkTriviaAnswer()
+
+    answeredTrivia = true;
+    enableAnswerButtons();
+}
+
+function enableAnswerButtons() {
+    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    // disable answer button if answered trivia, or else enable button for answering
+    answeredTrivia ? answer1.disabled = true : answer1.disabled = false;
+    answeredTrivia ? answer2.disabled = true : answer2.disabled = false;
+    answeredTrivia ? answer3.disabled = true : answer3.disabled = false;
+    answeredTrivia ? answer4.disabled = true : answer4.disabled = false;
+}
+
+function hideAnswerButtons() {
+    const { answer3, answer4 } = getButtonElements();
+
+    answer3.hidden = true;
+    answer4.hidden = true;
+}
+
+function getButtonElements() {
+    return {
+        answer1: <HTMLInputElement>document.getElementById('ans1'),
+        answer2: <HTMLInputElement>document.getElementById('ans2'),
+        answer3: <HTMLInputElement>document.getElementById('ans3'),
+        answer4: <HTMLInputElement>document.getElementById('ans4'),
+        next: <HTMLInputElement>document.getElementById('next'),
+    }
+}
+
+function resetAnswerBtnColors() {
+    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    // reset to default background color
+    answer1.style.backgroundColor = "blue";
+    answer2.style.backgroundColor = "blue";
+    answer3.style.backgroundColor = "blue";
+    answer4.style.backgroundColor = "blue";
+}
+
+function checkTriviaAnswer() {
+    const { next } = getButtonElements();
+
+    next.disabled = false;
 }
 
 
@@ -85,17 +162,17 @@ function getTrivia() {
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
-            Username: {{ store.getters.userName }} &emsp; &emsp; &emsp;
+            Username: {{ userName }} &emsp; &emsp; &emsp;
             Score: {{ triviaScore }} / {{ triviaQuestions.length }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn">{{ triviaAnswers[0] }}</button>
-            <button class="btn">{{ triviaAnswers[1] }}</button>
-            <button class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
-            <button class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans1">{{ triviaAnswers[0] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans2">{{ triviaAnswers[1] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
+            <button @click="getAnswerBtnValue" class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
         </div>
-        <button @click.prevent="nextQuestion" class="nextButton btn">Next Question</button>
+        <button @click.prevent="nextQuestion" class="nextButton btn" id="next">Next Question</button>
     </div>
 </template>
 
