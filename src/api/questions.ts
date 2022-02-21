@@ -2,8 +2,8 @@ import axios from "axios";
 
 const TRIVIA_URL = "https://opentdb.com/api.php?category=15"
 const apiAmount = "&amount="
+const apiCategory = "&category=";
 const apiDiff = "&difficulty=";
-const apiType = "&type=";
 
 export interface TriviaResponse {
     response_code: number,
@@ -19,12 +19,13 @@ export interface Trivia {
     incorrect_answers: string[]
 }
 
-export async function fetchTriviaQuestions(amount: string, diff: string): Promise<[string | null, Trivia[]]> {
+export async function fetchTriviaQuestions(amount: string, category: string, diff: string): Promise<[string | null, Trivia[]]> {
     try {
         const _amount = apiAmount + amount;
+        const _category = apiCategory + category;
         const _difficulty = apiDiff + diff;
 
-        const URL = TRIVIA_URL + _amount + _difficulty;
+        const URL = TRIVIA_URL + _amount + _category + _difficulty;
         console.log(URL);
 
         const { data } = await axios.get<TriviaResponse>(URL);
