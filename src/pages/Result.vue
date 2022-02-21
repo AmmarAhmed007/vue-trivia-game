@@ -8,6 +8,7 @@ import UserResultCorrectAnswer from '../components/ResultCorrectAnswers.vue';
 import UserResultQuestion from '../components/ResultQuestions.vue';
 import ResultUserAnswers from '../components/ResultUserAnswers.vue';
 import ResultCorrectAnswers from '../components/ResultCorrectAnswers.vue';
+import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
 
 const store = useStore();
@@ -53,14 +54,20 @@ function listUserStat() {
                 <h5 class="animate__animated animate__tada">Question</h5>
                     <ResultQuestions />
                 </div>
-                <div style="width: 20%;">
+
+                <div style="display:inline-block; width: 40%;">
+                <h5 class="animate__animated animate__tada">Answers</h5>
+                    <ResultAnswers />
+                </div>
+
+                <!-- <div style="width: 20%;">
                     <h5 class="animate__animated animate__tada">Correct Answer</h5>
                     <ResultCorrectAnswers />
                 </div>
                 <div style="width: 20%;">
                     <h5 class="animate__animated animate__tada">Your Answer</h5>
                     <ResultUserAnswers />
-                </div>
+                </div> -->
             </div>
         </div>
 

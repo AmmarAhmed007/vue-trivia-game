@@ -15,8 +15,8 @@ import { computed } from "vue";
 <style>
 
 p {
-
     border: 1px solid;
+    height: 15vh;
     padding: 10px;
 }
 </style>
