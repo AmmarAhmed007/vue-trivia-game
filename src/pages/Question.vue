@@ -16,11 +16,11 @@ const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
-let triviaCount = ref<number>(0);    
+let triviaCount = ref<number>(0);
 
-let questions: string[] = []; 
+let questions: string[] = [];
 let userAnswers: string[] = [];
-let correctAnswers: string[] = []; 
+let correctAnswers: string[] = [];
 
 const store = useStore();
 
@@ -51,6 +51,7 @@ let correct_trivia_answer = "";
 
 const nextQuestion = () => {
     if (triviaCount.value < amount.value) {
+        answeredTrivia = false;
         booleanTrivia = false;
         getTrivia();
     } else {
@@ -64,32 +65,21 @@ const nextQuestion = () => {
 function getTrivia() {
     const { question, correct_answer, incorrect_answers, type } = triviaQuestions[triviaCount.value];
 
+    // assign current trivia question and correct answer to global variables
     triviaQuestion.value = question;
+    correct_trivia_answer = correct_answer;
 
-    triviaAnswers.value = [];
-
-    triviaAnswers.value.push(correct_answer);
-    triviaAnswers.value.push(...incorrect_answers);
-
-    triviaAnswers.value.sort();
-
-    if (type === _type.boolean) {
-        // hide answers (buttons) 3 & 4 from html
-        // hideAnswerButtons();
-        booleanTrivia = true;
-    }
-
-    const { next } = getButtonElements();
-    next.style.backgroundColor = "orange";
-
+    // add current trivia question and correct answer to global arrays
     questions.push(question);
     correctAnswers.push(correct_answer);
 
-    correct_trivia_answer = correct_answer;
+    // reset, push and sort all current trivia answers
+    triviaAnswers.value = [];
+    triviaAnswers.value.push(...incorrect_answers, correct_answer);
+    triviaAnswers.value.sort();
 
-    answeredTrivia = false;
-
-    
+    // set booleanTrivia as true if boolean trivia type
+    if (type === _type.boolean) booleanTrivia = true;
 
     enableAnswerButtons();
     resetAnswerBtnColors();
@@ -175,7 +165,7 @@ function checkTriviaAnswer() {
             Question: {{ triviaCount }} / {{ amount }} &emsp; &emsp; &emsp;
             Username: {{ userName }} &emsp; &emsp; &emsp;
             Score: {{ triviaScore }} / {{ amount }} &emsp; &emsp; &emsp;
-            Difficulty: {{difficulty}}
+            Difficulty: {{ difficulty }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
