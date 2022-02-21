@@ -16,7 +16,7 @@ const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
-let triviaCount = ref<number>(0);   
+let triviaCount = ref<number>(0);    
 
 let questions: string[] = []; 
 let userAnswers: string[] = [];
@@ -36,25 +36,23 @@ let answeredTrivia = false;
 let correct_trivia_answer = "";
 
 (async function () {
-
-
-    // console.log(store.getters.userName);
-
-
+    // fetch trivia questions from API using amount and difficulty params as parameters
     const [error, questions] = await fetchTriviaQuestions(amount.value, difficulty.value);
     console.log(questions);
     console.log(error);
 
+    // add a copy of trivia questions to global variable
     triviaQuestions.push(...questions);
 
+    // get and display first trivia question with answers
     getTrivia();
-    triviaCount.value += 1;
+    //triviaCount.value += 1;
 })();
 
 const nextQuestion = () => {
 
     if (triviaCount.value < amount.value) {
-        triviaCount.value += 1;
+        // triviaCount.value += 1;
         getTrivia();
     } else {
         store.commit("setTriviaQuestions", questions);
@@ -93,6 +91,8 @@ function getTrivia() {
 
     enableAnswerButtons();
     resetAnswerBtnColors();
+
+    triviaCount.value += 1;
 }
 
 function getAnswerBtnValue(e) {
