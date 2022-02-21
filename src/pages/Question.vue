@@ -26,6 +26,8 @@ const userName = computed(() => store.state.userName);
 
 let answeredTrivia = false;
 
+let correct_trivia_answer = "";
+
 (async function () {
 
 
@@ -71,23 +73,43 @@ function getTrivia() {
 
     const { next } = getButtonElements();
     next.style.backgroundColor = "orange";
-    // userAnswers.push();
 
-    // disableAnswerButtons();
+
+
+    correct_trivia_answer = correct_answer;
 
     answeredTrivia = false;
 
     enableAnswerButtons();
+    resetAnswerBtnColors();
 }
 
-function getAnswerBtnValue(e){
-    console.log("Button value " + e.target.innerHTML)
-    disableAnswerButtons();
+function getAnswerBtnValue(e) {
+
+    const userAnswer: string = e.target.innerHTML;
+
+    userAnswers.push(userAnswer);
+
+    console.log("Button value " + userAnswer)
+    // disableAnswerButtons();
 
     const answer = <HTMLInputElement>document.getElementById(e.target.id)
-    answer.style.backgroundColor = "green";   
-    
+
+    if (userAnswer === correct_trivia_answer) {
+        answer.style.backgroundColor = "green";
+    } else {
+        const { answer1, answer2, answer3, answer4 } = getButtonElements();
+        const answers = [answer1, answer2, answer3, answer4];
+        answers.forEach(element => {
+            if (element.innerHTML === correct_trivia_answer) element.style.backgroundColor = "green"
+        });
+        answer.style.backgroundColor = "red";
+    }
+
+    //checkTriviaAnswer()
+
     answeredTrivia = true;
+    enableAnswerButtons();
 }
 
 function enableAnswerButtons() {
@@ -107,13 +129,22 @@ function hideAnswerButtons() {
 }
 
 function getButtonElements() {
-    return { 
+    return {
         answer1: <HTMLInputElement>document.getElementById('ans1'),
         answer2: <HTMLInputElement>document.getElementById('ans2'),
         answer3: <HTMLInputElement>document.getElementById('ans3'),
         answer4: <HTMLInputElement>document.getElementById('ans4'),
         next: <HTMLInputElement>document.getElementById('next'),
     }
+}
+
+function resetAnswerBtnColors() {
+    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    // reset to default background color
+    answer1.style.backgroundColor = "blue";
+    answer2.style.backgroundColor = "blue";
+    answer3.style.backgroundColor = "blue";
+    answer4.style.backgroundColor = "blue";
 }
 
 function checkTriviaAnswer() {
