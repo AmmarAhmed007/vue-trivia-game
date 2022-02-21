@@ -2,12 +2,12 @@
 import { reactive, ref, VueElement } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
+// import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
 
 const user = ref("");
 const displayError = ref("");
 
-const users = reactive<UserResponse[]>([]);
+// const users = reactive<UserResponse[]>([]);
 
 const store = useStore();
 const router = useRouter();
@@ -74,7 +74,6 @@ const onSubmit = async () => {
       <button type="submit" style="padding-left: 10px;">Enter the trivia</button>
     </fieldset>
   </form>
-  <p>Your entered name is: {{ user }}</p>
 
   <div v-if="displayError" class="bg-red-500 text-white p-3">
     <span class="text-lg block mb-3">Error</span>
