@@ -32,6 +32,7 @@ const difficulty = computed(() => store.state.triviaParams.difficulty);
 
 
 let answeredTrivia = false;
+let booleanTrivia = false;
 
 let correct_trivia_answer = "";
 
@@ -46,13 +47,11 @@ let correct_trivia_answer = "";
 
     // get and display first trivia question with answers
     getTrivia();
-    //triviaCount.value += 1;
 })();
 
 const nextQuestion = () => {
-
     if (triviaCount.value < amount.value) {
-        // triviaCount.value += 1;
+        booleanTrivia = false;
         getTrivia();
     } else {
         store.commit("setTriviaQuestions", questions);
@@ -76,7 +75,8 @@ function getTrivia() {
 
     if (type === _type.boolean) {
         // hide answers (buttons) 3 & 4 from html
-        hideAnswerButtons();
+        // hideAnswerButtons();
+        booleanTrivia = true;
     }
 
     const { next } = getButtonElements();
@@ -88,6 +88,8 @@ function getTrivia() {
     correct_trivia_answer = correct_answer;
 
     answeredTrivia = false;
+
+    
 
     enableAnswerButtons();
     resetAnswerBtnColors();
@@ -130,14 +132,12 @@ function enableAnswerButtons() {
     answeredTrivia ? answer2.disabled = true : answer2.disabled = false;
     answeredTrivia ? answer3.disabled = true : answer3.disabled = false;
     answeredTrivia ? answer4.disabled = true : answer4.disabled = false;
+
+    // hide two answer buttons if boolean trivia question, or else unhide
+    booleanTrivia ? answer3.hidden = true : answer3.hidden = false;
+    booleanTrivia ? answer4.hidden = true : answer4.hidden = false;
 }
 
-function hideAnswerButtons() {
-    const { answer3, answer4 } = getButtonElements();
-
-    answer3.hidden = true;
-    answer4.hidden = true;
-}
 
 function getButtonElements() {
     return {
