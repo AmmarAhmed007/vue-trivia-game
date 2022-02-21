@@ -13,13 +13,13 @@ const users = reactive<UserResponse[]>([]);
 const store = useStore();
 const router = useRouter();
 
-
-
 const onSubmit = async () => {
 
   store.commit("setName", user.value);
 
-  router.push("/question");
+  // router.push("/question");
+
+
 
   // const user = computed(() => store.state.user.userName);
 
@@ -57,30 +57,44 @@ const onSubmit = async () => {
 
   // console.log("ERR", error);
   // console.log("USER", user);
+
+  const checkedAmount = document.querySelector('input[name="amount"]:checked') as any;
+
+  const checkedDifficulty = document.querySelector('input[name="diff"]:checked') as any;
+
+  let amount = "10";
+  let diff = "easy";
+
+  if (checkedAmount.value !== null) console.log(checkedAmount.value);
+  else checkedAmount.value = "10";
+
+  if (checkedDifficulty.value !== null) console.log(checkedDifficulty.value);
+  else checkedDifficulty.value = "easy";
+
 }
 </script>
 
 <template>
   <div style="display:flexbox">
+    <h5>Select Trivia Amount</h5>
     <div class="triviaAmount">
-      <h5>Select Trivia Amount</h5>
       <div>
-        5
         <input type="radio" value="5" name="amount" />
+        5
+        <input type="radio" value="10" name="amount" checked />
         10
-        <input type="radio" value="10" name="amount" checked/>
-        15
         <input type="radio" value="15" name="amount" />
+        15
       </div>
     </div>
-
     <div class="triviadiff">
-      <h5>Select difficulty</h5>Easy
-      <input type="radio" name="diff" />
+      <h5>Select difficulty</h5>
+      <input type="radio" value="easy" name="diff" />
+      Easy
+      <input type="radio" value="medium" name="diff" checked />
       Medium
-      <input type="radio" name="diff" checked/>
+      <input type="radio" value="hard" name="diff" />
       Hard
-      <input type="radio" name="diff" />
     </div>
   </div>
 
