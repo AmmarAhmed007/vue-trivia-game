@@ -2,7 +2,13 @@
 import 'animate.css'
 import { computed, reactive, ref } from "vue";
 import { useStore } from "vuex";
-import UserResultStats from '../components/UserResultStats.vue'
+import UserResultStats from '../components/ResultQuestions.vue'
+import UserResultAnswerInput from '../components/ResultUserAnswers.vue';
+import UserResultCorrectAnswer from '../components/ResultCorrectAnswers.vue';
+import UserResultQuestion from '../components/ResultQuestions.vue';
+import ResultUserAnswers from '../components/ResultUserAnswers.vue';
+import ResultCorrectAnswers from '../components/ResultCorrectAnswers.vue';
+import ResultQuestions from '../components/ResultQuestions.vue';
 
 const store = useStore();
 
@@ -15,14 +21,14 @@ console.log(questionAnswers.value);
 console.log(userAnswers.value);
 
 function listUserStat() {
-    
+
 }
 
 </script>
 
 <template>
     <div class="main">
-        <div class="result shadow-lg shadow-black">
+        <div class="result2 shadow-lg shadow-black">
             <div class="header animate__animated animate__tada">
                 <h2>High Scores</h2>
             </div>
@@ -35,19 +41,26 @@ function listUserStat() {
                         <th class="username animate__animated animate__bounceInLeft">Username</th>
                         <th class="score animate__animated animate__bounceInLeft">Score</th>
                     </tr>
-                </table> -->
+                </table>-->
             </div>
         </div>
 
         <div class="result shadow-lg shadow-black">
-            <div class="header">
-                <h2>Your Stats</h2>
-                <UserResultStats />
-                <!-- <p>{{ questions }}</p>
-                <br />
-                <p>{{ questionAnswers }}</p>
-                <br />
-                <p>{{ userAnswers }}</p> -->
+            <h2 style="text-align:center">Your Stats</h2> <br>
+            <div class="header" style="display:inline-flex" >
+                
+                <div style="display:inline-block; width: 60%;">
+                <h5 class="animate__animated animate__tada">Question</h5>
+                    <ResultQuestions />
+                </div>
+                <div style="width: 20%;">
+                    <h5 class="animate__animated animate__tada">Correct Answer</h5>
+                    <ResultCorrectAnswers />
+                </div>
+                <div style="width: 20%;">
+                    <h5 class="animate__animated animate__tada">Your Answer</h5>
+                    <ResultUserAnswers />
+                </div>
             </div>
         </div>
 
@@ -84,8 +97,17 @@ function listUserStat() {
 }
 
 .result {
-    width: 60vh;
-    height: 60vh;
+    width: 80%;
+    height: 80vh;
+    padding: 10px;
+    float: left;
+    margin: 30px;
+    overflow: scroll;
+}
+
+.result2 {
+    width: 20%;
+    height: 80vh;
     padding: 10px;
     float: left;
     margin: 30px;
@@ -97,10 +119,16 @@ function listUserStat() {
 
 .btn1 {
     grid-column: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .btn2 {
     grid-column: 2;
+    position: absolute;
+    top: 10px;
+    left: 50px;
 }
 
 .main {
