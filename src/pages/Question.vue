@@ -64,7 +64,8 @@ function getTrivia() {
 
     if (type === _type.boolean) {
         // todo: hide answers (buttons) 3 & 4 from html
-        alert(_type.boolean + " type!");
+        // alert(_type.boolean + " type!");
+        hideAnswerButtons();
     }
 
     // userAnswers.push();
@@ -85,6 +86,13 @@ function disableAnswerButtons() {
 
     answer1.style.backgroundColor = "green";
     answer2.style.backgroundColor = "red";
+}
+
+function hideAnswerButtons() {
+    const { answer3, answer4 } = getAnswerButtonElements();
+
+    answer3.hidden = true;
+    answer4.hidden = true;
 }
 
 function getAnswerButtonElements() {
