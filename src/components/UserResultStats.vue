@@ -13,16 +13,14 @@ function listUserResult() {
 
     const questions = computed(() => store.state.questions);
     const answers = computed(() => store.state.answers);
+     const results = computed(() => store.state.results);
 
 </script>
 
 <template>
-    <ul>
-        <p v-for="question in questions" :key="question">
-            {{question}}
-        </p>
-        <li v-for="answer in answers" :key="answer">
-            {{answer}}
-        </li>
-    </ul>
+    <div v-for="(question, index) in questions" key="index">
+        <p>Trivia question: {{question}}</p>
+        <p>Correct answer: {{answers[index]}}</p>
+        <p>Your answer: {{results[index]}}</p>
+    </div>
 </template>
