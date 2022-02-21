@@ -46,8 +46,6 @@ const onSubmit = async () => {
 
 
   router.push("/question");
-
-
 }
 </script>
 
