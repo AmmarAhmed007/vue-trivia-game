@@ -18,7 +18,9 @@ let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
 let triviaCount = ref<number>(0);   
 
+let questions: string[] = []; 
 let userAnswers: string[] = [];
+let correctAnswers: string[] = []; 
 
 const store = useStore();
 
@@ -51,10 +53,13 @@ let correct_trivia_answer = "";
 
 const nextQuestion = () => {
 
-    if (triviaCount.value < triviaQuestions.length) {
+    if (triviaCount.value < amount.value) {
         triviaCount.value += 1;
         getTrivia();
     } else {
+        store.commit("setTriviaQuestions", questions);
+        store.commit("setTriviaAnswers", correctAnswers);
+        store.commit("setUserAnswers", userAnswers);
         router.push("/result");
     }
 }
@@ -79,7 +84,8 @@ function getTrivia() {
     const { next } = getButtonElements();
     next.style.backgroundColor = "orange";
 
-
+    questions.push(question);
+    correctAnswers.push(correct_answer);
 
     correct_trivia_answer = correct_answer;
 
@@ -168,7 +174,7 @@ function checkTriviaAnswer() {
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ amount }} &emsp; &emsp; &emsp;
             Username: {{ userName }} &emsp; &emsp; &emsp;
-            Score: {{ triviaScore }} / {{ amount * 10}} &emsp; &emsp; &emsp;
+            Score: {{ triviaScore }} / {{ amount }} &emsp; &emsp; &emsp;
             Difficulty: {{difficulty}}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>

@@ -1,5 +1,18 @@
 <script setup lang="ts">
     import 'animate.css'
+    import { computed, reactive, ref } from "vue";
+    import { useStore } from "vuex";
+
+    const store = useStore();
+
+    const questions = computed(() => store.state.questions);
+    const questionAnswers = computed(() => store.state.answers);
+    const userAnswers = computed(() => store.state.results);
+
+    console.log(questions.value);
+    console.log(questionAnswers.value);
+    console.log(userAnswers.value);
+
 </script>
 
 <template>
@@ -10,6 +23,9 @@
         <div class="grid-container">
             <div class="username animate__animated animate__bounceInLeft">Username</div>
             <div class="score animate__animated animate__bounceInLeft">Score</div>
+            <p>{{questions}}</p> <br>
+            <p>{{questionAnswers}}</p> <br>
+            <p>{{userAnswers}}</p>
         </div>
     </div>
             <div>

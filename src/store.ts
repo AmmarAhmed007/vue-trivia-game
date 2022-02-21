@@ -31,6 +31,15 @@ export default createStore({
         setTriviaDifficulty: (state, difficulty) => {
             state.triviaParams.difficulty = difficulty;
         },
+        setTriviaQuestions: (state, questions) => {
+            state.questions = questions;
+        },
+        setTriviaAnswers: (state, answers) => {
+            state.answers = answers;
+        },
+        setUserAnswers: (state, answers) => {
+            state.results = answers;
+        },
     },
     actions: {
         // asynchronous functions that can call one or more mutation functions
