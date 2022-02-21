@@ -59,15 +59,6 @@ function listUserStat() {
                 <h5 class="animate__animated animate__tada">Answers</h5>
                     <ResultAnswers />
                 </div>
-
-                <!-- <div style="width: 20%;">
-                    <h5 class="animate__animated animate__tada">Correct Answer</h5>
-                    <ResultCorrectAnswers />
-                </div>
-                <div style="width: 20%;">
-                    <h5 class="animate__animated animate__tada">Your Answer</h5>
-                    <ResultUserAnswers />
-                </div> -->
             </div>
         </div>
 
