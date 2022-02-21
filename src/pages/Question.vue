@@ -1,40 +1,31 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
-import { routerKey } from "vue-router";
-import VueRouter from 'vue-router'
-import { useStore } from "vuex";
-import { fetchTriviaQuestions, Trivia } from "../api/questions"
-import router from "../router";
 import 'animate.css'
+import { computed, reactive, ref } from "vue";
+import { useStore } from "vuex";
+import router from "../router";
+import { fetchTriviaQuestions, Trivia } from "../api/questions"
 
-// const _amount = { five: "5", ten: "10", fifteen: "15" }
-// const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
-const _type = { boolean: 'boolean', multiple: 'multiple' };
+// global variables
+const triviaType = { boolean: 'boolean', multiple: 'multiple' };
+let correct_trivia_answer = "";
+let answeredTrivia = false;
+let booleanTrivia = false;
+let questions: string[] = [];
+let userAnswers: string[] = [];
+let correctAnswers: string[] = [];
 
-//const userName = ref<string>("gingerbread")
+// set reactive and ref variables from vue
 const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
 let triviaCount = ref<number>(0);
 
-let questions: string[] = [];
-let userAnswers: string[] = [];
-let correctAnswers: string[] = [];
-
+// get state variables from vuex store
 const store = useStore();
-
 const userName = computed(() => store.state.userName);
-
 const amount = computed(() => store.state.triviaParams.amount);
 const difficulty = computed(() => store.state.triviaParams.difficulty);
-
-
-
-let answeredTrivia = false;
-let booleanTrivia = false;
-
-let correct_trivia_answer = "";
 
 (async function () {
     // fetch trivia questions from API using amount and difficulty params as parameters
@@ -79,7 +70,7 @@ function getTrivia() {
     triviaAnswers.value.sort();
 
     // set booleanTrivia as true if boolean trivia type
-    if (type === _type.boolean) booleanTrivia = true;
+    if (type === triviaType.boolean) booleanTrivia = true;
 
     enableAnswerButtons();
     resetAnswerBtnColors();
@@ -93,10 +84,9 @@ function getAnswerBtnValue(e) {
 
     userAnswers.push(userAnswer);
 
-    console.log("Button value " + userAnswer)
-    // disableAnswerButtons();
+    console.log("Button value " + userAnswer);
 
-    const answer = <HTMLInputElement>document.getElementById(e.target.id)
+    const answer = <HTMLInputElement>document.getElementById(e.target.id);
 
     if (userAnswer === correct_trivia_answer) {
         answer.style.backgroundColor = "green";
@@ -108,8 +98,6 @@ function getAnswerBtnValue(e) {
         });
         answer.style.backgroundColor = "red";
     }
-
-    //checkTriviaAnswer()
 
     answeredTrivia = true;
     enableAnswerButtons();
@@ -150,13 +138,6 @@ function resetAnswerBtnColors() {
     answer3.style.backgroundColor = "blue";
     answer4.style.backgroundColor = "blue";
 }
-
-function checkTriviaAnswer() {
-    const { next } = getButtonElements();
-
-    next.disabled = false;
-}
-
 
 </script>
 
