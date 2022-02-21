@@ -7,8 +7,8 @@ import { fetchTriviaQuestions, Trivia } from "../api/questions"
 import router from "../router";
 import 'animate.css'
 
-const _amount = { five: "5", ten: "10", fifteen: "15" }
-const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
+// const _amount = { five: "5", ten: "10", fifteen: "15" }
+// const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const _type = { boolean: 'boolean', multiple: 'multiple' };
 
 //const userName = ref<string>("gingerbread")
@@ -16,13 +16,18 @@ const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
 let triviaScore = ref<number>(0);
-let triviaCount = ref<number>(0);
+let triviaCount = ref<number>(0);   
 
 let userAnswers: string[] = [];
 
 const store = useStore();
 
 const userName = computed(() => store.state.userName);
+
+const amount = computed(() => store.state.triviaParams.amount);
+const difficulty = computed(() => store.state.triviaParams.difficulty);
+
+
 
 let answeredTrivia = false;
 
@@ -34,7 +39,7 @@ let correct_trivia_answer = "";
     // console.log(store.getters.userName);
 
 
-    const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.easy);
+    const [error, questions] = await fetchTriviaQuestions(amount.value, difficulty.value);
     console.log(questions);
     console.log(error);
 
@@ -161,9 +166,10 @@ function checkTriviaAnswer() {
     <div class="container animate__animated animate__zoomInUp" style="border:solid">
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
-            Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
+            Question: {{ triviaCount }} / {{ amount }} &emsp; &emsp; &emsp;
             Username: {{ userName }} &emsp; &emsp; &emsp;
-            Score: {{ triviaScore }} / {{ triviaQuestions.length }}
+            Score: {{ triviaScore }} / {{ amount * 10}} &emsp; &emsp; &emsp;
+            Difficulty: {{difficulty}}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">

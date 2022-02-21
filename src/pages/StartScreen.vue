@@ -17,35 +17,6 @@ const onSubmit = async () => {
 
   store.commit("setName", user.value);
 
-  // router.push("/question");
-
-
-
-  // const user = computed(() => store.state.user.userName);
-
-  // store.dispatch('setUserName', "JC")
-
-
-  // const user = await apiFindAll();
-
-  // const _user = await apiGetUser(user.value);
-
-  // console.log(user);
-
-  // const { username, score, id } = _user[0];
-
-  // console.log(_user[0]);
-
-  // console.log(username);
-  // console.log(score);
-  // console.log(id);
-
-
-  // const name =  apiGetUser(username.value);
-
-  // console.log(name);
-
-
   // const user = await apiUsersRegister(username.value);
   // const error = "";
   // if (error !== null) {
@@ -65,11 +36,17 @@ const onSubmit = async () => {
   let amount = "10";
   let diff = "easy";
 
-  if (checkedAmount.value !== null) console.log(checkedAmount.value);
-  else checkedAmount.value = "10";
+  if (checkedAmount.value !== null) amount = checkedAmount.value;
 
-  if (checkedDifficulty.value !== null) console.log(checkedDifficulty.value);
-  else checkedDifficulty.value = "easy";
+  if (checkedDifficulty.value !== null) diff = checkedDifficulty.value;
+
+
+  store.commit("setTriviaAmount", amount);
+  store.commit("setTriviaDifficulty", diff);
+
+
+  router.push("/question");
+
 
 }
 </script>

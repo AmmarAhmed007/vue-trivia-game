@@ -9,6 +9,10 @@ export default createStore({
             name: "",
             score: "",
         },
+        triviaParams: {
+            amount: "10",
+            difficulty: "medium",
+        },
         questions: [],
         answers: [],
         results: [],
@@ -20,6 +24,12 @@ export default createStore({
         },
         setScore: (state, score) => {
             state.user.score = score;
+        },
+        setTriviaAmount: (state, amount) => {
+            state.triviaParams.amount = amount;
+        },
+        setTriviaDifficulty: (state, difficulty) => {
+            state.triviaParams.difficulty = difficulty;
         },
     },
     actions: {
