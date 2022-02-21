@@ -104,6 +104,11 @@ function getAnswerButtonElements() {
 }
 function getAnswerBtnValue(e){
     console.log("Button value " + e.target.innerHTML)
+    disableAnswerButtons();
+
+    const answer = <HTMLInputElement>document.getElementById(e.target.id)
+    answer.style.backgroundColor = "green";
+    
 }
 
 </script>
