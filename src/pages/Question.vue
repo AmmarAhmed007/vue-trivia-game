@@ -11,7 +11,7 @@ const _amount = { five: "5", ten: "10", fifteen: "15" }
 const _difficulty = { easy: 'easy', medium: 'medium', hard: 'hard' };
 const _type = { boolean: 'boolean', multiple: 'multiple' };
 
-const userName = ref<string>("gingerbread")
+//const userName = ref<string>("gingerbread")
 const triviaQuestions = reactive<Trivia[]>([]);
 let triviaQuestion = ref<string>("");
 let triviaAnswers = ref<string[]>([]);
@@ -23,12 +23,13 @@ let userAnswers: string[] = [];
 const store = useStore();
 //store.commit("setUserName", {user:user.value}) 
 
-// const user = computed(() => store.state.user.userName);
-
-const _userName = store.getters.userName;
+ const userName = computed(() => store.state.userName);
 
 
-console.log(_userName);
+//const _userName = store.getters.userName;
+
+
+//console.log(_userName);
 
 
 
@@ -85,7 +86,7 @@ function getTrivia() {
         <div id="question-container" class="hide"></div>
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ triviaQuestions.length }} &emsp; &emsp; &emsp;
-            Username: {{ store.getters.userName }} &emsp; &emsp; &emsp;
+            Username: {{ userName }} &emsp; &emsp; &emsp;
             Score: {{ triviaScore }} / {{ triviaQuestions.length }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
