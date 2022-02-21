@@ -66,6 +66,34 @@ function getTrivia() {
         // todo: hide answers (buttons) 3 & 4 from html
         alert(_type.boolean + " type!");
     }
+
+    // userAnswers.push();
+
+    disableAnswerButtons();
+}
+
+function disableAnswerButtons() {
+
+    const { answer1, answer2, answer3, answer4 } = getAnswerButtonElements();
+
+    answer1.disabled = true;
+    answer2.disabled = true;
+    answer3.disabled = true;
+    answer4.disabled = true;
+
+    // alert(answer3.innerHTML);
+
+    answer1.style.backgroundColor = "green";
+    answer2.style.backgroundColor = "red";
+}
+
+function getAnswerButtonElements() {
+    return { 
+        answer1: <HTMLInputElement>document.getElementById('ans1'),
+        answer2: <HTMLInputElement>document.getElementById('ans2'),
+        answer3: <HTMLInputElement>document.getElementById('ans3'),
+        answer4: <HTMLInputElement>document.getElementById('ans4'),
+    }
 }
 
 
@@ -82,8 +110,8 @@ function getTrivia() {
         </div>
         <div class="questions">{{ triviaQuestion }}</div>
         <div id="answers" class="btn-grid">
-            <button class="btn">{{ triviaAnswers[0] }}</button>
-            <button class="btn">{{ triviaAnswers[1] }}</button>
+            <button class="btn" id="ans1">{{ triviaAnswers[0] }}</button>
+            <button class="btn" id="ans2">{{ triviaAnswers[1] }}</button>
             <button class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
             <button class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
         </div>
