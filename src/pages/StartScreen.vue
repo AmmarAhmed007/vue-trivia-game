@@ -68,7 +68,7 @@ const onSubmit = async () => {
         5
         <input type="radio" value="5" name="amount" />
         10
-        <input type="radio" value="10" name="amount" />
+        <input type="radio" value="10" name="amount" checked/>
         15
         <input type="radio" value="15" name="amount" />
       </div>
@@ -78,16 +78,9 @@ const onSubmit = async () => {
       <h5>Select difficulty</h5>Easy
       <input type="radio" name="diff" />
       Medium
-      <input type="radio" name="diff" />
+      <input type="radio" name="diff" checked/>
       Hard
       <input type="radio" name="diff" />
-    </div>
-
-    <div class="triviaType">
-      <h5>Select question type</h5>True/False
-      <input type="radio" name="type" />
-      Multiple Choise
-      <input type="radio" name="type" />
     </div>
   </div>
 
