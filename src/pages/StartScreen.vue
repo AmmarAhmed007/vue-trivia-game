@@ -17,7 +17,6 @@ const router = useRouter();
 
 const onSubmit = async () => {
 
-
   store.commit("setName", user.value);
 
   router.push("/question");

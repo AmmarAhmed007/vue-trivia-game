@@ -21,23 +21,14 @@ let triviaCount = ref<number>(0);
 let userAnswers: string[] = [];
 
 const store = useStore();
-//store.commit("setUserName", {user:user.value}) 
 
- const userName = computed(() => store.state.userName);
-
-
-//const _userName = store.getters.userName;
-
-
-//console.log(_userName);
-
-
+const userName = computed(() => store.state.userName);
 
 (async function () {
 
-    
-   // console.log(store.getters.userName);
-    
+
+    // console.log(store.getters.userName);
+
 
     const [error, questions] = await fetchTriviaQuestions(_amount.five, _difficulty.easy);
     console.log(questions);
