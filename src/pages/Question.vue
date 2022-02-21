@@ -67,49 +67,46 @@ function getTrivia() {
         hideAnswerButtons();
     }
 
+    const { next } = getButtonElements();
+    next.style.backgroundColor = "orange";
     // userAnswers.push();
 
     // disableAnswerButtons();
 }
 
-function disableAnswerButtons() {
-
-    const { answer1, answer2, answer3, answer4 } = getAnswerButtonElements();
-
-    answer1.disabled = true;
-    answer2.disabled = true;
-    answer3.disabled = true;
-    answer4.disabled = true;
-
-    // alert(answer3.innerHTML);
-
-    answer1.style.backgroundColor = "green";
-    answer2.style.backgroundColor = "red";
-}
-
-function hideAnswerButtons() {
-    const { answer3, answer4 } = getAnswerButtonElements();
-
-    answer3.hidden = true;
-    answer4.hidden = true;
-}
-
-function getAnswerButtonElements() {
-    return { 
-        answer1: <HTMLInputElement>document.getElementById('ans1'),
-        answer2: <HTMLInputElement>document.getElementById('ans2'),
-        answer3: <HTMLInputElement>document.getElementById('ans3'),
-        answer4: <HTMLInputElement>document.getElementById('ans4'),
-    }
-}
 function getAnswerBtnValue(e){
     console.log("Button value " + e.target.innerHTML)
     disableAnswerButtons();
 
     const answer = <HTMLInputElement>document.getElementById(e.target.id)
-    answer.style.backgroundColor = "green";
-    
+    answer.style.backgroundColor = "green";    
 }
+
+function disableAnswerButtons() {
+    const { answer1, answer2, answer3, answer4 } = getButtonElements();
+    answer1.disabled = true;
+    answer2.disabled = true;
+    answer3.disabled = true;
+    answer4.disabled = true;
+}
+
+function hideAnswerButtons() {
+    const { answer3, answer4 } = getButtonElements();
+
+    answer3.hidden = true;
+    answer4.hidden = true;
+}
+
+function getButtonElements() {
+    return { 
+        answer1: <HTMLInputElement>document.getElementById('ans1'),
+        answer2: <HTMLInputElement>document.getElementById('ans2'),
+        answer3: <HTMLInputElement>document.getElementById('ans3'),
+        answer4: <HTMLInputElement>document.getElementById('ans4'),
+        next: <HTMLInputElement>document.getElementById('next'),
+    }
+}
+
 
 </script>
 
@@ -129,7 +126,7 @@ function getAnswerBtnValue(e){
             <button @click="getAnswerBtnValue" class="btn" id="ans3">{{ triviaAnswers[2] }}</button>
             <button @click="getAnswerBtnValue" class="btn" id="ans4">{{ triviaAnswers[3] }}</button>
         </div>
-        <button @click.prevent="nextQuestion" class="nextButton btn">Next Question</button>
+        <button @click.prevent="nextQuestion" class="nextButton btn" id="next">Next Question</button>
     </div>
 </template>
 
