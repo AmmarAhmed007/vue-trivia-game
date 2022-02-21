@@ -24,6 +24,8 @@ const store = useStore();
 
 const userName = computed(() => store.state.userName);
 
+let answeredTrivia = false;
+
 (async function () {
 
 
@@ -72,6 +74,10 @@ function getTrivia() {
     // userAnswers.push();
 
     // disableAnswerButtons();
+
+    answeredTrivia = false;
+
+    enableAnswerButtons();
 }
 
 function getAnswerBtnValue(e){
@@ -79,15 +85,18 @@ function getAnswerBtnValue(e){
     disableAnswerButtons();
 
     const answer = <HTMLInputElement>document.getElementById(e.target.id)
-    answer.style.backgroundColor = "green";    
+    answer.style.backgroundColor = "green";   
+    
+    answeredTrivia = true;
 }
 
-function disableAnswerButtons() {
+function enableAnswerButtons() {
     const { answer1, answer2, answer3, answer4 } = getButtonElements();
-    answer1.disabled = true;
-    answer2.disabled = true;
-    answer3.disabled = true;
-    answer4.disabled = true;
+    // disable answer button if answered trivia, or else enable button for answering
+    answeredTrivia ? answer1.disabled = true : answer1.disabled = false;
+    answeredTrivia ? answer2.disabled = true : answer2.disabled = false;
+    answeredTrivia ? answer3.disabled = true : answer3.disabled = false;
+    answeredTrivia ? answer4.disabled = true : answer4.disabled = false;
 }
 
 function hideAnswerButtons() {
@@ -105,6 +114,12 @@ function getButtonElements() {
         answer4: <HTMLInputElement>document.getElementById('ans4'),
         next: <HTMLInputElement>document.getElementById('next'),
     }
+}
+
+function checkTriviaAnswer() {
+    const { next } = getButtonElements();
+
+    next.disabled = false;
 }
 
 
