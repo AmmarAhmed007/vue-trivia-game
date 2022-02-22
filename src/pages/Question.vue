@@ -245,7 +245,7 @@ body.correct {
     float: right;
     padding-top: 10px;
     width: 100%;
-    background-color: darksalmon;
+    background-color: #f4511e;
 }
 
 .questions-counter {
