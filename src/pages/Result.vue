@@ -129,6 +129,7 @@ onMounted(() => {
     float: left;
     margin: 30px;
     overflow: scroll;
+    background: white;
 }
 
 .result2 {
@@ -137,6 +138,7 @@ onMounted(() => {
     padding: 10px;
     float: left;
     margin: 30px;
+    background: white;
 }
 
 .header {
