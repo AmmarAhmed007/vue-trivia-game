@@ -48,27 +48,17 @@ onMounted(() => {
 
 <template>
     <div class="main">
-        <div class="result2 shadow-lg shadow-black">
+        <div class="result2 shadow-lg shadow-black" style="display:inline-flexbox; overflow:scroll">
             <div class="header animate__animated animate__tada">
                 <h2>High Scores</h2>
-                <!-- <p v-for="user in users" key="user">{{user}} {{user.username}} {{user.score}}</p> -->
             </div>
 
             <div class="grid-container">
                 <div class="grid-item username animate__animated animate__bounceInLeft">Username</div>
                 <div class="grid-item score animate__animated animate__bounceInLeft">Score</div>
-                
-                
-                <!-- <table>
-                    <tr>
-                        <th class="username animate__animated animate__bounceInLeft">Username</th>
-                        <th class="score animate__animated animate__bounceInLeft">Score</th>
-                    </tr>
-                </table>-->
             </div>
             <div>
                 <p v-for="(user) in users" key="user">{{user.username}}: {{user.score}}</p>
-                <!-- <ResultUsers /> -->
             </div>
         </div>
 
