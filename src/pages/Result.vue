@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import 'animate.css'
-import { computed, onMounted, reactive, ref } from "vue";
+import { onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
-import ResultUsers from '../components/ResultUsers.vue';
 import { apiFetchUsers, UserResponse } from "../api/users";
 
 const store = useStore();
-
-// const questions = computed(() => store.state.questions);
-// const questionAnswers = computed(() => store.state.answers);
-// const userAnswers = computed(() => store.state.results);
-
-// console.log(questions.value);
-// console.log(questionAnswers.value);
-// console.log(userAnswers.value);
 
 const users = reactive<UserResponse[]>([]);
 
