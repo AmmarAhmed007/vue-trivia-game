@@ -1,13 +1,12 @@
 import { createStore } from "vuex";
-import { apiGetUser } from "./api/users";
 
 export default createStore({
     state: {
         // variables and collections
         user: {
             name: "",
-            score: "",
-            id: "",
+            score: 0,
+            id: 0,
         },
         triviaParams: {
             amount: "10",
@@ -25,6 +24,12 @@ export default createStore({
         },
         setScore: (state, score) => {
             state.user.score = score;
+        },
+        setId: (state, id) => {
+            state.user.id = id;
+        },
+        setUser: (state, user) => {
+            state.user = user;
         },
         setTriviaAmount: (state, amount) => {
             state.triviaParams.amount = amount;

@@ -18,9 +18,11 @@ export async function apiFetchUsers(): Promise<UserResponse[]> {
     return users;
 }
 
-export async function apiGetUser(user: any): Promise<any> {
+export async function apiGetUser(user: string): Promise<any> {
+    const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
+
     try {
-        const { data } = await axios.get<UserResponse>(`${BASE_URL}?username=${user}`)
+        const { data } = await axios.get<UserResponse>(`${BASE_URL}?username=${user}`, { headers: { 'x-api-key': apiKey } })
         return data;
     } catch (error: any) {
         console.log(error);
@@ -29,49 +31,30 @@ export async function apiGetUser(user: any): Promise<any> {
 
 export async function apiPostUser(name: string): Promise<any> {
 
-    // const config = {
-    //     "content-type": "application/json",
-    //     "key": "q0oAROehq0u7HUS7yve0AQ==",
-    // }
-
-    // const apiUser = { username: name , score: "0", id: "3"};
-    const apiUser = { username: name , score: "0"};
-
+    const apiUser = { username: name, score: 0};
 
     const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
 
     return axios.post(`${BASE_URL}`, apiUser, { headers: { 'x-api-key': apiKey } })
-        
+
         .catch(error => {
             console.error("There was an error!", error.message);
             alert(error.message);
         });
 }
 
-export async function apiUsersRegister(username: any) {
-    try {
-        const config = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                user: {
-                    username
-                }
-            })
-        }
+export async function apiPutUserHighScore(name: string, score: number, id: number): Promise<any> {
 
-        const response = await fetch(`${BASE_URL}?username=${username}`, config)
-        const { success, data, error = "An error occured" } = await response.json()
-        if (!success) {
-            throw new Error(error)
-        }
+    const updatedUser = { name: name, score: score, id: id}
 
-        return [null, data]
-    }
-    catch (error: any) {
-        return [error.message, null]
+    console.log(updatedUser);
+    
 
-    }
+    const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
+
+    return axios.put(`${BASE_URL}?id=${updatedUser.id}`, updatedUser, { headers: { 'x-api-key': apiKey } })
+        .catch(error => {
+            console.error("There was an error!", error.message);
+            alert(error.message);
+        });
 }

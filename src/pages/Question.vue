@@ -23,7 +23,7 @@ let triviaCount = ref<number>(0);
 
 // get state variables from vuex store
 const store = useStore();
-const userName = computed(() => store.state.userName);
+const userName = computed(() => store.state.user.name);
 const amount = computed(() => store.state.triviaParams.amount);
 const category = computed(() => store.state.triviaParams.category);
 const difficulty = computed(() => store.state.triviaParams.difficulty);
