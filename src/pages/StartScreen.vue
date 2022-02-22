@@ -27,7 +27,7 @@ const onSubmit = async () => {
 
   const apiUser = { username: user.value, score: "10", id: "0"};
 
-  apiPostUser(apiUser);
+  apiPostUser(user.value);
 
   // change to Question.vue
   router.push("/question");
