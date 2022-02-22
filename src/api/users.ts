@@ -7,12 +7,14 @@ export interface UserResponse {
     id: number;
 }
 
-export async function apiFindAll(): Promise<UserResponse[]> {
-    const { data } = await axios.get<UserResponse>(BASE_URL);
-
-    const users = [];
-    users.push(data);
-
+export async function apiFetchUsers(): Promise<UserResponse[]> {
+    const users: UserResponse[] = [];
+    try {
+        const { data } = await axios.get<UserResponse[]>(BASE_URL);
+        users.push(...data);
+    } catch (error: any) {
+        console.log(error.message);
+    }
     return users;
 }
 

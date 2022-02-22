@@ -2,28 +2,35 @@
 import 'animate.css'
 import { computed, reactive, ref } from "vue";
 import { useStore } from "vuex";
-import UserResultStats from '../components/ResultQuestions.vue'
-import UserResultAnswerInput from '../components/ResultUserAnswers.vue';
-import UserResultCorrectAnswer from '../components/ResultCorrectAnswers.vue';
-import UserResultQuestion from '../components/ResultQuestions.vue';
-import ResultUserAnswers from '../components/ResultUserAnswers.vue';
-import ResultCorrectAnswers from '../components/ResultCorrectAnswers.vue';
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
+import ResultUsers from '../components/ResultUsers.vue';
+import { apiFetchUsers, UserResponse } from "../api/users";
 
 const store = useStore();
 
-const questions = computed(() => store.state.questions);
-const questionAnswers = computed(() => store.state.answers);
-const userAnswers = computed(() => store.state.results);
+// const questions = computed(() => store.state.questions);
+// const questionAnswers = computed(() => store.state.answers);
+// const userAnswers = computed(() => store.state.results);
 
-console.log(questions.value);
-console.log(questionAnswers.value);
-console.log(userAnswers.value);
+// console.log(questions.value);
+// console.log(questionAnswers.value);
+// console.log(userAnswers.value);
 
-function listUserStat() {
+const users = reactive<UserResponse[]>([]);
 
-}
+
+// (async function () {
+//     const apiUsers = await apiFetchUsers();
+//     console.log(apiUsers.values);
+
+//     users.push(...apiUsers);
+    
+    
+// })();
+
+
+
 
 </script>
 
@@ -32,17 +39,23 @@ function listUserStat() {
         <div class="result2 shadow-lg shadow-black">
             <div class="header animate__animated animate__tada">
                 <h2>High Scores</h2>
+                <!-- <p v-for="user in users" key="user">{{user}} {{user.username}} {{user.score}}</p> -->
             </div>
 
             <div class="grid-container">
                 <div class="grid-item username animate__animated animate__bounceInLeft">Username</div>
                 <div class="grid-item score animate__animated animate__bounceInLeft">Score</div>
+                
+                
                 <!-- <table>
                     <tr>
                         <th class="username animate__animated animate__bounceInLeft">Username</th>
                         <th class="score animate__animated animate__bounceInLeft">Score</th>
                     </tr>
                 </table>-->
+            </div>
+            <div>
+                <ResultUsers />
             </div>
         </div>
 
