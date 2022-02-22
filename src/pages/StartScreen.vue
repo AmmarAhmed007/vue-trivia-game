@@ -25,6 +25,8 @@ const onSubmit = async () => {
   store.commit("setTriviaCategory", checkedCategory.value);
   store.commit("setTriviaDifficulty", checkedDifficulty.value);
 
+  const apiUser = { username: user.value, score: "10", id: "0"};
+
   apiPostUser(user.value);
 
   // change to Question.vue
