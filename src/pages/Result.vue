@@ -8,22 +8,13 @@ import { apiFetchUsers, apiGetUser, apiPutUserHighScore, UserResponse } from "..
 
 const store = useStore();
 
-const userName = computed(() => store.state.user.name);
-const userScore = computed(() => store.state.user.score);
-
 const user = computed(() => store.state.user);
 
 const { name, score, id } = user.value;
 
 const users = reactive<UserResponse[]>([]);
-// const name = ref("");
-// const score = ref("");
 
 const existingUsers = reactive<UserResponse[]>([]);
-
-// name.value = userName.value;
-// score.value = userScore.value;
-
 
 
 onMounted(() => {
@@ -55,18 +46,6 @@ onMounted(() => {
     })();
     
 });
-
-// (async function () {
-//     const apiUsers = await apiFetchUsers();
-//     console.log(apiUsers.values);
-
-//     users.push(...apiUsers);
-    
-    
-// })();
-
-
-
 
 </script>
 

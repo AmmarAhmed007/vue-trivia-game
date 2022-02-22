@@ -27,14 +27,6 @@ export async function apiGetUser(user: string): Promise<any> {
     } catch (error: any) {
         console.log(error);
     }
-
-
-
-    // return const { data } =await axios.get(`${BASE_URL}?username=${user}`, { headers: { 'x-api-key': apiKey } })
-    //     .catch(error => {
-    //         console.error("There was an error!", error.message);
-    //         alert(error.message);
-    //     });
 }
 
 export async function apiPostUser(name: string): Promise<any> {
@@ -53,8 +45,6 @@ export async function apiPostUser(name: string): Promise<any> {
 
 export async function apiPutUserHighScore(name: string, score: number, id: number): Promise<any> {
 
-    // const apiUser = { username: name, score: "0" };
-
     const updatedUser = { name: name, score: score, id: id}
 
     console.log(updatedUser);
@@ -67,33 +57,4 @@ export async function apiPutUserHighScore(name: string, score: number, id: numbe
             console.error("There was an error!", error.message);
             alert(error.message);
         });
-}
-
-
-export async function apiUsersRegister(username: any) {
-    try {
-        const config = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                user: {
-                    username
-                }
-            })
-        }
-
-        const response = await fetch(`${BASE_URL}?username=${username}`, config)
-        const { success, data, error = "An error occured" } = await response.json()
-        if (!success) {
-            throw new Error(error)
-        }
-
-        return [null, data]
-    }
-    catch (error: any) {
-        return [error.message, null]
-
-    }
 }

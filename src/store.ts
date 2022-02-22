@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-import { apiGetUser } from "./api/users";
 
 export default createStore({
     state: {
