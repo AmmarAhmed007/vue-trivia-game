@@ -4,7 +4,6 @@ import { apiGetUser } from "./api/users";
 export default createStore({
     state: {
         // variables and collections
-        userName: "Gamer123",
         user: {
             name: "",
             score: "",
@@ -49,10 +48,10 @@ export default createStore({
     actions: {
         // asynchronous functions that can call one or more mutation functions
 
-        setUserName: ({commit, state}, newName) => {
-            commit('setName',  newName);
-            return state.userName;
-        },
+        // setUserName: ({commit, state}, newName) => {
+        //     commit('setName',  newName);
+        //     return state.userName;
+        // },
 
 
         // async registerTriviaUser({ commit, state }, action) {
@@ -73,7 +72,7 @@ export default createStore({
     },
     getters: {
         userName: (state) => {
-            return state.userName;
+            return state.user.name;
         },
     }
 })

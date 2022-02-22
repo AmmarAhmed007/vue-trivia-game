@@ -29,12 +29,15 @@ export async function apiGetUser(user: any): Promise<any> {
 
 export async function apiPostUser(user: any): Promise<any> {
 
-    const config = {
-        "content-type": "application/json",
-        "key": "",
-    }
+    // const config = {
+    //     "content-type": "application/json",
+    //     "key": "q0oAROehq0u7HUS7yve0AQ==",
+    // }
 
-    axios.post(`${BASE_URL}`, user, { headers: config })
+
+    const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
+
+    axios.post(`${BASE_URL}`, user, { headers: { key: apiKey } })
         .then(response => user.id = response.data.id)
         .catch(error => {
             console.error("There was an error!", error.message);
