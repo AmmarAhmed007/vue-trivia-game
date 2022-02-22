@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import 'animate.css'
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
@@ -18,6 +18,17 @@ const store = useStore();
 // console.log(userAnswers.value);
 
 const users = reactive<UserResponse[]>([]);
+
+onMounted(() => {
+    //store.dispatch("fetchUsers")
+    (async function () {
+        const apiUsers = await apiFetchUsers();
+
+        console.log(apiUsers);
+
+            users.push(...apiUsers);
+    })();
+});
 
 
 // (async function () {
@@ -55,7 +66,8 @@ const users = reactive<UserResponse[]>([]);
                 </table>-->
             </div>
             <div>
-                <ResultUsers />
+                <p v-for="(user) in users" key="user">{{user.username}}: {{user.score}}</p>
+                <!-- <ResultUsers /> -->
             </div>
         </div>
 
