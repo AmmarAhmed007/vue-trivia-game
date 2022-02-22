@@ -3,6 +3,7 @@ import { reactive, ref, VueElement } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 // import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
+import { apiPostUser } from "../api/users";
 
 const user = ref("");
 const displayError = ref("");
@@ -23,6 +24,10 @@ const onSubmit = async () => {
   store.commit("setTriviaAmount", checkedAmount.value);
   store.commit("setTriviaCategory", checkedCategory.value);
   store.commit("setTriviaDifficulty", checkedDifficulty.value);
+
+  const apiUser = { username: user.value, score: "10", id: "0"};
+
+  apiPostUser(apiUser)
 
   // change to Question.vue
   router.push("/question");

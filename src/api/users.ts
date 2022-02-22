@@ -27,6 +27,21 @@ export async function apiGetUser(user: any): Promise<any> {
     }
 }
 
+export async function apiPostUser(user: any): Promise<any> {
+
+    const config = {
+        "content-type": "application/json",
+        "key": "",
+    }
+
+    axios.post(`${BASE_URL}`, user, { headers: config })
+        .then(response => user.id = response.data.id)
+        .catch(error => {
+            console.error("There was an error!", error.message);
+            alert(error.message);
+        });
+}
+
 export async function apiUsersRegister(username: any) {
     try {
         const config = {
