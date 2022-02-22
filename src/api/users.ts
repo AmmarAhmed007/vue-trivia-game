@@ -34,7 +34,8 @@ export async function apiPostUser(name: string): Promise<any> {
     //     "key": "q0oAROehq0u7HUS7yve0AQ==",
     // }
 
-    const apiUser = { username: name , score: "0", id: "3"};
+    // const apiUser = { username: name , score: "0", id: "3"};
+    const apiUser = { username: name , score: "0"};
 
 
     const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
