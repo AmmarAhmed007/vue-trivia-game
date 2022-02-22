@@ -3,7 +3,7 @@ import { reactive, ref, VueElement } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 // import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
-import { apiPostUser } from "../api/users";
+import { apiGetUser, apiPostUser } from "../api/users";
 
 const user = ref("");
 const displayError = ref("");
@@ -19,15 +19,26 @@ const onSubmit = async () => {
   const checkedCategory = document.querySelector('input[name="category"]:checked') as any;
   const checkedDifficulty = document.querySelector('input[name="diff"]:checked') as any;
 
-  // commit username and checked trivia api parameters to vuex store variables 
+  // commit checked trivia api parameters to vuex store variables 
   store.commit("setName", user.value);
   store.commit("setTriviaAmount", checkedAmount.value);
   store.commit("setTriviaCategory", checkedCategory.value);
   store.commit("setTriviaDifficulty", checkedDifficulty.value);
+  
+  // reset user values and set in store
+  const userReset = { name: user.value, score: "0", id: "" }
+  store.commit("setUser", userReset);
 
-  const apiUser = { username: user.value, score: "10", id: "0" };
+  // fetch user from api
+  const existingUser = await apiGetUser(user.value);
 
-  apiPostUser(user.value);
+  if (existingUser.length === 0) {
+    // create new user since no existing user was fetched
+    apiPostUser(user.value);
+  } else if (existingUser.length === 1) {
+    // set id of existing user in store
+    store.commit("setId", existingUser[0].id);
+  }
 
   // change to Question.vue
   router.push("/question");

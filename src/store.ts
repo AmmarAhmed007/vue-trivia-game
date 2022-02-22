@@ -26,6 +26,12 @@ export default createStore({
         setScore: (state, score) => {
             state.user.score = score;
         },
+        setId: (state, id) => {
+            state.user.id = id;
+        },
+        setUser: (state, user) => {
+            state.user = user;
+        },
         setTriviaAmount: (state, amount) => {
             state.triviaParams.amount = amount;
         },
