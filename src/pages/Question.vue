@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import 'animate.css'
-import { computed, reactive, ref } from "vue";
+import { computed, Events, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import router from "../router";
 import { fetchTriviaQuestions, Trivia } from "../api/questions"
@@ -80,7 +80,7 @@ function getTrivia() {
     triviaCount.value += 1;
 }
 
-function getAnswerBtnValue(e) {
+function getAnswerBtnValue(e: any) {
 
     const userAnswer: string = e.target.innerHTML;
 
