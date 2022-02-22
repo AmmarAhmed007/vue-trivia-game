@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref, VueElement } from "vue";
+import { onMounted, reactive, ref, VueElement } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 // import { apiGetUser, apiUsersRegister, apiFindAll, UserResponse } from "../api/users"
+import { apiFetchUsers } from "../api/users"
 
 const user = ref("");
 const displayError = ref("");
@@ -11,6 +12,11 @@ const displayError = ref("");
 
 const store = useStore();
 const router = useRouter();
+
+//fetch the users from api when starting
+onMounted(() => {
+    store.dispatch("fetchUsers")
+})
 
 const onSubmit = async () => {
   // assign values of checked radio buttons
@@ -23,6 +29,9 @@ const onSubmit = async () => {
   store.commit("setTriviaAmount", checkedAmount.value);
   store.commit("setTriviaCategory", checkedCategory.value);
   store.commit("setTriviaDifficulty", checkedDifficulty.value);
+
+  const apiUsers = await apiFetchUsers();
+  store.commit("setUsers", ...apiUsers);
 
   // change to Question.vue
   router.push("/question");

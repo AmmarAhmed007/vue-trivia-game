@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { apiGetUser } from "./api/users";
+import { apiGetUser, apiFetchUsers, UserResponse } from "./api/users";
 
 export default createStore({
     state: {
@@ -17,6 +17,7 @@ export default createStore({
         questions: [],
         answers: [],
         results: [],
+        users: [],
     },
     mutations: {
         // synchronous function for changing state 
@@ -25,6 +26,9 @@ export default createStore({
         },
         setScore: (state, score) => {
             state.user.score = score;
+        },
+        setUsers: (state, users) => {
+            state.users = users;
         },
         setTriviaAmount: (state, amount) => {
             state.triviaParams.amount = amount;
@@ -48,9 +52,18 @@ export default createStore({
     actions: {
         // asynchronous functions that can call one or more mutation functions
 
-        setUserName: ({commit, state}, newName) => {
-            commit('setName',  newName);
+        setUserName: ({ commit, state }, newName) => {
+            commit('setName', newName);
             return state.userName;
+        },
+        async fetchUsers({ commit }) {
+            // const response = await fetch("https://aa-jc-vue-trivia-game.herokuapp.com/trivia")
+            // const users = await response.json()
+
+            const users = await apiFetchUsers();
+
+            // this.state.users.push(...users)
+            commit('setUsers', users)
         },
 
 
@@ -74,5 +87,6 @@ export default createStore({
         userName: (state) => {
             return state.userName;
         },
+        getUsers: (state) => { return state.users },
     }
 })

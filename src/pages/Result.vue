@@ -9,6 +9,9 @@ import { apiFetchUsers, UserResponse } from "../api/users";
 
 const store = useStore();
 
+
+const apiUsers = computed(() => store.state.users);
+
 // const questions = computed(() => store.state.questions);
 // const questionAnswers = computed(() => store.state.answers);
 // const userAnswers = computed(() => store.state.results);
@@ -55,6 +58,7 @@ const users = reactive<UserResponse[]>([]);
                 </table>-->
             </div>
             <div>
+                <!-- <p>{{apiUsers.username}} {{apiUsers.score}}</p> -->
                 <ResultUsers />
             </div>
         </div>
