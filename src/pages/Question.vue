@@ -50,6 +50,7 @@ const nextQuestion = () => {
         store.commit("setTriviaQuestions", questions);
         store.commit("setTriviaAnswers", correctAnswers);
         store.commit("setUserAnswers", userAnswers);
+        store.commit("setScore", triviaScore.value);
         router.push("/result");
     }
 }
@@ -91,6 +92,7 @@ function getAnswerBtnValue(e) {
 
     if (userAnswer === correct_trivia_answer) {
         answer.style.backgroundColor = "green";
+        triviaScore.value += 10;
     } else {
         const { answer1, answer2, answer3, answer4 } = getButtonElements();
         const answers = [answer1, answer2, answer3, answer4];
@@ -149,7 +151,7 @@ function resetAnswerBtnColors() {
         <div class="questions-counter">
             Question: {{ triviaCount }} / {{ amount }} &emsp; &emsp; &emsp;
             Username: {{ userName }} &emsp; &emsp; &emsp;
-            Score: {{ triviaScore }} / {{ amount }} &emsp; &emsp; &emsp;
+            Score: {{ triviaScore }} &emsp; &emsp; &emsp;
             Difficulty: {{ difficulty }}
         </div>
         <div class="questions">{{ triviaQuestion }}</div>

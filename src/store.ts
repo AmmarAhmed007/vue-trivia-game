@@ -8,6 +8,7 @@ export default createStore({
         user: {
             name: "",
             score: "",
+            id: "",
         },
         triviaParams: {
             amount: "10",
@@ -21,7 +22,7 @@ export default createStore({
     mutations: {
         // synchronous function for changing state 
         setName: (state, name) => {
-            state.userName = name;
+            state.user.name = name;
         },
         setScore: (state, score) => {
             state.user.score = score;

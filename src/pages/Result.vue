@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import 'animate.css'
-import { onMounted, reactive } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
@@ -8,7 +8,17 @@ import { apiFetchUsers, UserResponse } from "../api/users";
 
 const store = useStore();
 
+const userName = computed(() => store.state.user.name);
+const userScore = computed(() => store.state.user.score);
+
 const users = reactive<UserResponse[]>([]);
+// const name = ref("");
+// const score = ref("");
+
+// name.value = userName.value;
+// score.value = userScore.value;
+
+
 
 onMounted(() => {
     //store.dispatch("fetchUsers")
@@ -63,7 +73,9 @@ onMounted(() => {
         </div>
 
         <div class="result shadow-lg shadow-black">
-            <h2 style="text-align:center">Your Stats</h2> <br>
+            <h2 style="text-align:center">Your Stats </h2> 
+            <h5 style="text-align:center">Username: {{userName}} &emsp; &emsp; &emsp; Score: {{userScore}}</h5>
+            <br>
             <div class="header" style="display:inline-flex" >
                 
                 <div style="display:inline-block; width: 60%;">
