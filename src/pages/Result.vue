@@ -4,45 +4,40 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
-import { apiFetchUsers, UserResponse } from "../api/users";
+import { apiFetchUsers, UserResponse, apiGetUser, apiPutUserHighScore } from "../api/users";
 
 const store = useStore();
-
-const userName = computed(() => store.state.user.name);
-const userScore = computed(() => store.state.user.score);
-
+const user = computed(() => store.state.user);
+const { name, score, id } = user.value;
 const users = reactive<UserResponse[]>([]);
-// const name = ref("");
-// const score = ref("");
-
-// name.value = userName.value;
-// score.value = userScore.value;
-
-
+const existingUsers = reactive<UserResponse[]>([]);
 
 onMounted(() => {
     //store.dispatch("fetchUsers")
     (async function () {
         const apiUsers = await apiFetchUsers();
 
+        const existingUser = await apiGetUser(store.state.user.name);
+
+        console.log(existingUser);
+
+        existingUsers.push(...existingUser)
+        const newScore = store.state.user.score;
+
+
+        if (newScore > existingUsers[0].score) {
+            console.log("PUT NEW HIGHSCORE: " + newScore);
+            existingUsers[0].score = newScore;
+            console.log(existingUsers[0]);
+            // apiPutUserHighScore(existingUsers[0].username, existingUsers[0].score, existingUsers[0].id);
+        }
+
         console.log(apiUsers);
 
-                users.push(...apiUsers);
+        users.push(...apiUsers);
     })();
-    
+
 });
-
-// (async function () {
-//     const apiUsers = await apiFetchUsers();
-//     console.log(apiUsers.values);
-
-//     users.push(...apiUsers);
-    
-    
-// })();
-
-
-
 
 </script>
 
@@ -57,8 +52,7 @@ onMounted(() => {
             <div class="grid-container">
                 <div class="grid-item username animate__animated animate__bounceInLeft">Username</div>
                 <div class="grid-item score animate__animated animate__bounceInLeft">Score</div>
-                
-                
+
                 <!-- <table>
                     <tr>
                         <th class="username animate__animated animate__bounceInLeft">Username</th>
@@ -67,24 +61,23 @@ onMounted(() => {
                 </table>-->
             </div>
             <div>
-                <p v-for="(user) in users" key="user">{{user.username}}: {{user.score}}</p>
+                <p v-for="(user) in users" key="user">{{ user.username }}: {{ user.score }}</p>
                 <!-- <ResultUsers /> -->
             </div>
         </div>
 
         <div class="result shadow-lg shadow-black">
-            <h2 style="text-align:center">Your Stats </h2> 
-            <h5 style="text-align:center">Username: {{userName}} &emsp; &emsp; &emsp; Score: {{userScore}}</h5>
-            <br>
-            <div class="header" style="display:inline-flex" >
-                
+            <h2 style="text-align:center">Your Stats</h2>
+            <h5 style="text-align:center">Username: {{name}} (Id: {{id}}) &emsp; &emsp; &emsp; Score: {{score}}</h5>
+            <br />
+            <div class="header" style="display:inline-flex">
                 <div style="display:inline-block; width: 60%;">
-                <h5 class="animate__animated animate__tada">Question</h5>
+                    <h5 class="animate__animated animate__tada">Question</h5>
                     <ResultQuestions />
                 </div>
 
                 <div style="display:inline-block; width: 40%;">
-                <h5 class="animate__animated animate__tada">Answers</h5>
+                    <h5 class="animate__animated animate__tada">Answers</h5>
                     <ResultAnswers />
                 </div>
             </div>
