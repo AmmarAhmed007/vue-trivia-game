@@ -23,7 +23,7 @@ const users: UserResponse[] = [];
 
 <template>
     <div v-for="(user) in users" key="user">
-        <p>{{user.username}} {{user.score}}</p>
+        <p>{{ user.username }} {{ user.score }}</p>
     </div>
 </template>
 

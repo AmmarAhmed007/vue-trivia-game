@@ -26,10 +26,10 @@ onMounted(() => {
 
         console.log(apiUsers);
 
-            users.push(...apiUsers);
+                users.push(...apiUsers);
     })();
+    
 });
-
 
 // (async function () {
 //     const apiUsers = await apiFetchUsers();
