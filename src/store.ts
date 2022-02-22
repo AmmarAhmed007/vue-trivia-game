@@ -6,8 +6,8 @@ export default createStore({
         // variables and collections
         user: {
             name: "",
-            score: "",
-            id: "",
+            score: 0,
+            id: 0,
         },
         triviaParams: {
             amount: "10",

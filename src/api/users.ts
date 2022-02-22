@@ -39,7 +39,7 @@ export async function apiGetUser(user: string): Promise<any> {
 
 export async function apiPostUser(name: string): Promise<any> {
 
-    const apiUser = { username: name, score: "0" };
+    const apiUser = { username: name, score: 0};
 
     const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
 
@@ -50,6 +50,25 @@ export async function apiPostUser(name: string): Promise<any> {
             alert(error.message);
         });
 }
+
+export async function apiPutUserHighScore(name: string, score: number, id: number): Promise<any> {
+
+    // const apiUser = { username: name, score: "0" };
+
+    const updatedUser = { name: name, score: score, id: id}
+
+    console.log(updatedUser);
+    
+
+    const apiKey = "q0oAROehq0u7HUS7yve0AQ==";
+
+    return axios.put(`${BASE_URL}?id=${updatedUser.id}`, updatedUser, { headers: { 'x-api-key': apiKey } })
+        .catch(error => {
+            console.error("There was an error!", error.message);
+            alert(error.message);
+        });
+}
+
 
 export async function apiUsersRegister(username: any) {
     try {

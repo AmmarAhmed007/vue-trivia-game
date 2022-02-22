@@ -4,16 +4,22 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import ResultAnswers from '../components/ResultAnswers.vue';
 import ResultQuestions from '../components/ResultQuestions.vue';
-import { apiFetchUsers, UserResponse } from "../api/users";
+import { apiFetchUsers, apiGetUser, apiPutUserHighScore, UserResponse } from "../api/users";
 
 const store = useStore();
 
 const userName = computed(() => store.state.user.name);
 const userScore = computed(() => store.state.user.score);
 
+const user = computed(() => store.state.user);
+
+const { name, score, id } = user.value;
+
 const users = reactive<UserResponse[]>([]);
 // const name = ref("");
 // const score = ref("");
+
+const existingUsers = reactive<UserResponse[]>([]);
 
 // name.value = userName.value;
 // score.value = userScore.value;
@@ -25,6 +31,24 @@ onMounted(() => {
     (async function () {
         const apiUsers = await apiFetchUsers();
 
+        const existingUser = await apiGetUser(store.state.user.name);
+        console.log(existingUser);
+        existingUsers.push(...existingUser)
+
+
+        const newScore = store.state.user.score;
+
+        console.log(score);
+        console.log(newScore);
+
+        if (newScore > existingUsers[0].score) {
+            console.log("PUT NEW HIGHSCORE: " + newScore);
+            existingUsers[0].score = newScore;
+            console.log(existingUsers[0]);
+            
+            apiPutUserHighScore(existingUsers[0].username, existingUsers[0].score, existingUsers[0].id);
+        }
+        
         console.log(apiUsers);
 
                 users.push(...apiUsers);
@@ -51,6 +75,7 @@ onMounted(() => {
         <div class="result2 shadow-lg shadow-black">
             <div class="header animate__animated animate__tada">
                 <h2>High Scores</h2>
+                <!-- <h5>CURRENT: {{existingUsers[0].score}}</h5> -->
                 <!-- <p v-for="user in users" key="user">{{user}} {{user.username}} {{user.score}}</p> -->
             </div>
 
@@ -74,7 +99,8 @@ onMounted(() => {
 
         <div class="result shadow-lg shadow-black">
             <h2 style="text-align:center">Your Stats </h2> 
-            <h5 style="text-align:center">Username: {{userName}} &emsp; &emsp; &emsp; Score: {{userScore}}</h5>
+            <h5 style="text-align:center">Username: {{name}} (Id: {{id}}) &emsp; &emsp; &emsp; Score: {{score}}</h5>
+            <!-- <h5 style="text-align:center">Username: {{userName}} &emsp; &emsp; &emsp; Score: {{userScore}}</h5> -->
             <br>
             <div class="header" style="display:inline-flex" >
                 

@@ -20,13 +20,12 @@ const onSubmit = async () => {
   const checkedDifficulty = document.querySelector('input[name="diff"]:checked') as any;
 
   // commit checked trivia api parameters to vuex store variables 
-  store.commit("setName", user.value);
   store.commit("setTriviaAmount", checkedAmount.value);
   store.commit("setTriviaCategory", checkedCategory.value);
   store.commit("setTriviaDifficulty", checkedDifficulty.value);
   
   // reset user values and set in store
-  const userReset = { name: user.value, score: "0", id: "" }
+  const userReset = { name: user.value, score: 0, id: 0 }
   store.commit("setUser", userReset);
 
   // fetch user from api
